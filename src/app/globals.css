@@ -4,6 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
 @layer base {
@@ -69,4 +70,11 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  font-family: "Digital-7";
+  src: url("./fonts/digital-7/Digital7.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }

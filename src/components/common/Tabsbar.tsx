@@ -1,23 +1,46 @@
+"use client";
+
 import { LuDatabase, LuGamepad2 } from "react-icons/lu";
 import TabItem from "./TabItem";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
+const tabs = [
+  {
+    value: "staking",
+    href: "/staking",
+    icon: <LuDatabase size={24} />,
+    label: "Deposit",
+  },
+  {
+    value: "game",
+    href: "/game",
+    icon: <LuGamepad2 size={28} />,
+    label: "Game",
+  },
+];
 export default function Tabsbar() {
+  const currentPath = usePathname();
+
   return (
     <div className="flex w-full justify-between border-y-[1px] border-purple-600 py-4 text-center text-white">
-      <TabItem
-        value="deposit"
-        href="/deposit"
-        icon={<LuDatabase size={24} />}
-        label="Deposit"
-        className="flex-1 text-lg"
-      />
-      <TabItem
-        className="flex-1 text-lg"
-        value="game"
-        href="/game"
-        icon={<LuGamepad2 size={28} />}
-        label="Game"
-      />
+      {tabs.map((tab, index) => (
+        <div key={tab.value} className="flex flex-1 items-center">
+          <TabItem
+            value={tab.value}
+            href={tab.href}
+            icon={tab.icon}
+            label={tab.label}
+            className={clsx(
+              "flex-1 font-bold",
+              currentPath === tab.href && "text-purple-400",
+            )}
+          />
+          {index < tabs.length - 1 && (
+            <div className="h-full w-[2px] bg-purple-600" />
+          )}
+        </div>
+      ))}
     </div>
   );
 }

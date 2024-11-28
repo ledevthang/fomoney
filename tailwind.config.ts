@@ -59,7 +59,16 @@ export default {
       backgroundImage: {
         "homepage-bg": "url('/images/bg.png')",
       },
+      fontFamily: {
+        digital: ["Digital-7", "sans-serif"],
+      },
+      textShadow: {
+        sm: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+        md: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+        lg: "4px 4px 6px rgba(0, 0, 0, 0.5)",
+        blue: "0 0 8px #1da1f2", // Example of a glowing text shadow
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwindcss-textshadow")],
 } satisfies Config;
