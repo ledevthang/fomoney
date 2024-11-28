@@ -5,6 +5,7 @@ import AppProvider from "@/providers/AppProvider";
 import Header from "@/components/layouts/Header";
 import Tabsbar from "@/components/common/Tabsbar";
 import Footer from "@/components/layouts/Footer";
+import "@solana/wallet-adapter-react-ui/styles.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-homepage-bg mx-auto min-h-screen max-w-[430px] rounded-lg border-purple-600 bg-cover bg-center bg-no-repeat p-4 antialiased md:border`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-homepage-bg mx-auto min-h-screen max-w-[450px] rounded-lg border-purple-600 bg-cover bg-center bg-no-repeat p-4 antialiased md:border`}
       >
         <AppProvider>
           <Header />

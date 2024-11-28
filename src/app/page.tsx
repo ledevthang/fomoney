@@ -25,7 +25,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex items-center justify-start gap-2 text-4xl font-bold text-yellow-500">
+          <div className="flex items-center justify-start gap-2 text-5xl font-bold text-yellow-500">
             <Image src={sonicx} width={32} height={32} alt="Sonic X" />
             <span className="font-digital text-shadow-blue">
               {prizedPool.toLocaleString("en-US")}

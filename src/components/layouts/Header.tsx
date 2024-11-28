@@ -1,11 +1,11 @@
-import ConnectWalletButton from "../common/ConnectWalletButton";
+import { CustomWalletMultiButton } from "../common/CustomWalletMultiButton";
 import Logo from "./Logo";
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between">
+    <header className="mb-2 flex items-center justify-between">
       <Logo />
-      <ConnectWalletButton />
+      <CustomWalletMultiButton />
     </header>
   );
 }

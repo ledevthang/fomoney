@@ -5,7 +5,7 @@ import logo from "../../../public/images/logo.png";
 export default function Logo() {
   return (
     <Link href={"/"}>
-      <Image src={logo} alt="FoMoney Logo" width={170} className="h-auto" />
+      <Image src={logo} alt="FoMoney Logo" width={120} className="h-auto" />
     </Link>
   );
 }
