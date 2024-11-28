@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-homepage-bg mx-auto min-h-screen max-w-[430px] bg-cover bg-center bg-no-repeat p-4 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-homepage-bg mx-auto min-h-screen max-w-[430px] rounded-lg border-purple-600 bg-cover bg-center bg-no-repeat p-4 antialiased md:border`}
       >
         <AppProvider>
           <Header />

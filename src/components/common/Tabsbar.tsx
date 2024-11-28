@@ -23,7 +23,7 @@ export default function Tabsbar() {
   const currentPath = usePathname();
 
   return (
-    <div className="flex w-full justify-between border-y-[1px] border-purple-600 py-4 text-center text-white">
+    <div className="flex w-full justify-between border-y-[1px] border-purple-600 py-2 text-center text-white">
       {tabs.map((tab, index) => (
         <div key={tab.value} className="flex flex-1 items-center">
           <TabItem

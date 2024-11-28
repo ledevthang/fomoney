@@ -12,6 +12,7 @@ import {
   PhantomWalletAdapter,
   SolflareWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // 0. Set up Solana Adapter
 const solanaWeb3JsAdapter = new SolanaAdapter({
@@ -42,10 +43,15 @@ createAppKit({
   },
 });
 
+// Create a client
+const queryClient = new QueryClient();
+
 export default function AppProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
 }
