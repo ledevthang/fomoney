@@ -1,3 +1,4 @@
+import { Ranking } from "@/types/user";
 import { shortenWalletAddress } from "@/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
@@ -24,7 +25,8 @@ export default function RankingListItem({ data, index }: RankingListItemProps) {
         <p>{shortenWalletAddress(wallet, 4)}</p>
       </div>
       <p className="font-semibold text-yellow-400">
-        {points} <span className="text-xs text-gray-400">pts</span>
+        {points.toLocaleString("en-US")}{" "}
+        <span className="text-xs text-gray-400">pts</span>
       </p>
     </div>
   );

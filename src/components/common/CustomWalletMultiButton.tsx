@@ -5,18 +5,21 @@ import { useWalletMultiButton } from "@solana/wallet-adapter-base-ui";
 import "@solana/wallet-adapter-react-ui";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { Wallet2Icon } from "lucide-react";
-import Image from "next/image";
 import React, {
   CSSProperties,
   FC,
   MouseEvent,
   PropsWithChildren,
   ReactElement,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { auth } from "@/services/user";
+import { useMutation } from "@tanstack/react-query";
 
 export type ButtonProps = PropsWithChildren<{
   className?: string;
@@ -60,6 +63,28 @@ const LABELS = {
 } as const;
 
 export function CustomWalletMultiButton(props: ButtonProps) {
+  const { wallet, publicKey } = useWallet();
+
+  const mutateAuth = useMutation({
+    mutationKey: ["auth"],
+    mutationFn: auth,
+  });
+
+  const handleLogin = useCallback(async (walletAddress: string) => {
+    const response = await mutateAuth.mutateAsync({
+      provider: "wallet",
+      credential: walletAddress,
+    });
+    return response.accessToken;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (publicKey) {
+      handleLogin(publicKey.toBase58());
+    }
+  }, [wallet, publicKey, handleLogin]);
+
   return (
     <BaseWalletMultiButton
       {...props}

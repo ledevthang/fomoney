@@ -4,19 +4,21 @@ import { useFetchRankings } from "@/hooks/useFetchRankings";
 import SectionTitle from "./SectionTitle";
 import { useMemo } from "react";
 import RankingListItem from "./RankingListItem";
-import { Skeleton } from "../ui/skeleton";
+import { Loader2Icon } from "lucide-react";
 
 export default function TopRankings() {
   const rankings = useFetchRankings();
 
   const renderPlacerholder = useMemo(
     () => (
-      <>
-        <Skeleton className="h-[20px] w-[100px] rounded-full" />
-      </>
+      <div className="flex h-10 items-center justify-center gap-1">
+        <Loader2Icon className="animate-spin" />
+        Loading
+      </div>
     ),
     [],
   );
+
   return (
     <div>
       <SectionTitle label="Top Rankers" />

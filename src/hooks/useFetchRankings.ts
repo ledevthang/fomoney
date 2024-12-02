@@ -1,4 +1,5 @@
 import { fetchRankings } from "@/services/user";
+import { Ranking } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
 
 export const useFetchRankings = () => {
