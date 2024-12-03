@@ -1,3 +1,12 @@
 export default function GamePage() {
-  return <div className="min-h-[500px]">Comming soon!</div>;
+  return (
+    <div className="h-screen">
+      <iframe
+        src="https://fomoneyh5.vercel.app/"
+        className="h-full w-full"
+        allowFullScreen
+        title="HTML5 Game"
+      ></iframe>
+    </div>
+  );
 }

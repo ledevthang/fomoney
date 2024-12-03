@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import { endpoint, wallets } from "@/lib/solana-wallet";
+import { endpoint } from "@/lib/solana-wallet";
 import "@solana/wallet-adapter-react-ui/styles.css";
 
 export default function SolanaWalletProvider({
@@ -20,7 +18,7 @@ export default function SolanaWalletProvider({
       }}
       endpoint={endpoint}
     >
-      <WalletProvider wallets={wallets as any} autoConnect>
+      <WalletProvider wallets={[]} autoConnect>
         <WalletModalProvider>{children}</WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

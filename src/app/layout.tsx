@@ -5,6 +5,7 @@ import AppProvider from "@/providers/AppProvider";
 import Header from "@/components/layouts/Header";
 import Tabsbar from "@/components/common/Tabsbar";
 import Footer from "@/components/layouts/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,14 +31,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} mx-auto min-h-screen max-w-[450px] rounded-lg border-purple-600 bg-homepage-bg bg-cover bg-center bg-no-repeat p-4 antialiased md:border`}
+        className={`${geistSans.variable} ${geistMono.variable} relative flex min-h-screen w-full justify-center bg-homepage-bg bg-cover bg-center bg-no-repeat antialiased`}
       >
-        <AppProvider>
-          <Header />
-          <Tabsbar />
-          {children}
-          <Footer />
-        </AppProvider>
+        <Toaster />
+        <div className="w-full max-w-[450px] rounded-lg border-purple-600 p-4 md:border">
+          <AppProvider>
+            <Header />
+            <Tabsbar />
+            {children}
+            <Footer />
+          </AppProvider>
+        </div>
       </body>
     </html>
   );
