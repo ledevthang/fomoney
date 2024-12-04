@@ -1,0 +1,55 @@
+name: Deploy FoMoney to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Job to build the project
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: ./dist # Adjust the path to match your build output directory
+
+  # Job to deploy to EC2
+  deployment:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Deploy to EC2
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+
+      - name: Configure SSH key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > keypair.pem
+          chmod 600 keypair.pem
+
+      - name: Deploy to EC2
+        run: |
+          scp -i keypair.pem -o StrictHostKeyChecking=no -r ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/app
+          ssh -i keypair.pem -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          cd /home/${{ secrets.SSH_USER }}/app && npm install --omit=dev && pm2 restart all"
