@@ -9,7 +9,7 @@ export default function DepositPage() {
   const totalValueLocked = 200000000;
   const prizedPool = 5000000;
   return (
-    <div className="py-4">
+    <div className="p-4">
       <SectionTitle label="Deposit" />
       <div className="rounded-lg border-2 border-yellow-500 p-4">
         <div className="text-center">
