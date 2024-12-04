@@ -11,7 +11,7 @@ export default function Home() {
     <div className="">
       <div className="mb-10 mt-4 rounded-lg border-[1px] border-yellow-500 bg-white/10 px-2 py-4 shadow-lg backdrop-blur-xl">
         <h1 className="text-2xl font-bold text-yellow-400">
-          Enjoy "Lossless &<br /> Fun" Gaming
+          Enjoy &quot;Lossless &<br /> Fun&quot; Gaming
         </h1>
         <div className="mt-10">
           <div className="flex items-center justify-between">
