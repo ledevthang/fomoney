@@ -21,10 +21,7 @@ export default function DepositResultDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
-        {/* Overlay with full-screen coverage */}
         <DialogOverlay className="fixed inset-0 bg-black/60" />
-
-        {/* Dialog Content centered */}
         <DialogContent className="fixed left-1/2 top-1/2 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-4 shadow-lg">
           <DialogHeader>
             <DialogTitle className="text-left text-lg font-bold text-black">
