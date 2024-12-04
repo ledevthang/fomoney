@@ -8,7 +8,7 @@ export default function Home() {
   const prizedPool = 5000000;
 
   return (
-    <div className="">
+    <div className="p-4">
       <div className="mb-10 mt-4 rounded-lg border-[1px] border-yellow-500 bg-white/10 px-2 py-4 shadow-lg backdrop-blur-xl">
         <h1 className="text-2xl font-bold text-yellow-400">
           Enjoy &quot;Lossless &<br /> Fun&quot; Gaming
