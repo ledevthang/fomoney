@@ -6,7 +6,6 @@ on:
       - main
 
 jobs:
-  # Job to build the project
   build:
     runs-on: ubuntu-latest
 
@@ -17,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18" # Specify your Node.js version
+          node-version: "18"
 
       - name: Install dependencies
         run: npm install
@@ -25,11 +24,17 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: List directory contents
+        run: ls -la
+
+      - name: List .next directory contents
+        run: ls -la .next
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: ./.next # Adjust the path to match your build output directory
+          path: ./.next
 
   # Job to deploy to EC2
   deployment:
