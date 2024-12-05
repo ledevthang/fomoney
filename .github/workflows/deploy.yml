@@ -47,7 +47,7 @@ jobs:
           name: build-output
 
       - name: Verify downloaded artifact contents
-        run: ls -la ./build-output
+        run: ls -la build-output
 
       - name: Configure SSH key
         run: |
