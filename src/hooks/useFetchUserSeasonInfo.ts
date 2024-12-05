@@ -9,7 +9,7 @@ export const useFetchUserSeasonInfo = () => {
   const { program } = useAnchor();
   const { publicKey } = useWallet();
 
-  const fetchTvlPoolData = useQuery({
+  const fetchSeasonUserInfo = useQuery({
     queryKey: [EQueryKey.seasonUserInfo, publicKey],
     queryFn: async () => {
       if (!publicKey)
@@ -44,5 +44,5 @@ export const useFetchUserSeasonInfo = () => {
     enabled: !!publicKey,
   });
 
-  return fetchTvlPoolData;
+  return fetchSeasonUserInfo;
 };

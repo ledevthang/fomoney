@@ -14,6 +14,7 @@ import { web3 } from "@coral-xyz/anchor";
 import { LoaderCircle } from "lucide-react";
 import { PRICE_PER_KEY } from "@/constants";
 import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
+import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
 
 export default function DepositForm() {
   const [openResultModal, setOpenResultModal] = useState(false);
@@ -23,6 +24,7 @@ export default function DepositForm() {
   const { publicKey } = useWallet();
   const { program } = useAnchor();
   const { refetch } = useFetchTotalValueLocked();
+  const { refetch: refetchUserSeasonInfo } = useFetchUserSeasonInfo();
 
   const handleClickDeposit = () => {
     if (!publicKey)
@@ -60,6 +62,8 @@ export default function DepositForm() {
     onSuccess: () => {
       setOpenResultModal(true);
       refetch();
+      refetchUserSeasonInfo();
+      setValue("");
     },
     onError: (error) => {
       toast({
@@ -118,6 +122,7 @@ export default function DepositForm() {
         description={`You are about to deposit ${value} SOL.`}
       />
       <DepositResultDialog
+        value={+value}
         open={openResultModal}
         onOpenChange={setOpenResultModal}
       />
