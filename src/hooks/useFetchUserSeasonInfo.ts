@@ -1,31 +1,47 @@
-import { EQueryKey } from "@/constants";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { EContractSeeds, EQueryKey } from "@/constants";
 import { PublicKey } from "@solana/web3.js";
 import { useQuery } from "@tanstack/react-query";
 import { useAnchor } from "./useAnchor";
+import { BN } from "bn.js";
 
 export const useFetchUserSeasonInfo = () => {
   const { program } = useAnchor();
+  const { publicKey } = useWallet();
 
   const fetchTvlPoolData = useQuery({
-    queryKey: [EQueryKey.tvlPoolData],
+    queryKey: [EQueryKey.seasonUserInfo, publicKey],
     queryFn: async () => {
+      if (!publicKey)
+        return {
+          deposited: new BN(0),
+          staked: new BN(0),
+          key: new BN(0),
+          point: new BN(0),
+          userPubkey: "",
+          seasonId: new BN(0),
+          usedKey: new BN(0),
+        };
       const [masterAccount] = PublicKey.findProgramAddressSync(
-        [Buffer.from("authority")],
+        [Buffer.from(EContractSeeds.authority)],
         program.programId,
       );
       const masterData = await program.account.master.fetch(masterAccount);
 
-      const [seasonalTvlPool] = PublicKey.findProgramAddressSync(
+      const [seasonUserInfo] = PublicKey.findProgramAddressSync(
         [
-          Buffer.from("seasonal_tvl_pool_seed"),
+          Buffer.from(EContractSeeds.user_seanonal_info_seed),
           masterData.seasonId.toArrayLike(Buffer, "le", 8),
+          publicKey.toBuffer(),
         ],
         program.programId,
       );
-      const seasonalTvlPoolData =
-        await program.account.seasonTvlPool.fetch(seasonalTvlPool);
-      return seasonalTvlPoolData;
+
+      const seasonUserData =
+        await program.account.userSeasonalInfo.fetch(seasonUserInfo);
+      return seasonUserData;
     },
+    enabled: !!publicKey,
   });
 
   return fetchTvlPoolData;

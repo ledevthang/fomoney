@@ -30,7 +30,7 @@ export default function DepositForm() {
         title: "Error",
         description: "Please connect your wallet first",
         variant: "destructive",
-        duration: 1500,
+        duration: 2000,
       });
 
     if (!value || +value < PRICE_PER_KEY) {
@@ -39,7 +39,16 @@ export default function DepositForm() {
         description:
           "Please enter a valid amount to deposit. Minimum amount is 0.01 SOL",
         variant: "destructive",
-        duration: 1500,
+        duration: 2000,
+      });
+    }
+
+    if (+value % PRICE_PER_KEY !== 0) {
+      return toast({
+        title: "Error",
+        description: "Please enter a multiple of 0.01 SOL",
+        variant: "destructive",
+        duration: 2000,
       });
     }
 
@@ -81,7 +90,6 @@ export default function DepositForm() {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           min={0.01}
-          inputMode="numeric"
           required
         />
         <p className="absolute right-3 top-1/2 -translate-y-1/2 rounded bg-gray-400 px-2 text-sm text-white">

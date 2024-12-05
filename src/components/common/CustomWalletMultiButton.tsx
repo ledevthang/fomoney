@@ -60,6 +60,7 @@ const LABELS = {
   disconnect: "Disconnect",
   "has-wallet": "Connect",
   "no-wallet": "Select Wallet",
+  "switch-network": "Switch network",
 } as const;
 
 export function CustomWalletMultiButton(props: ButtonProps) {
@@ -174,6 +175,13 @@ export function BaseWalletMultiButton({ children, labels, ...props }: Props) {
         ref={ref}
         role="menu"
       >
+        <li
+          className="wallet-adapter-dropdown-list-item"
+          onClick={async () => {}}
+          role="menuitem"
+        >
+          Switch network
+        </li>
         {publicKey ? (
           <li
             className="wallet-adapter-dropdown-list-item"
@@ -221,7 +229,7 @@ export function BaseWalletConnectionButton({
     <Button
       {...props}
       className="wallet-adapter-button-trigger"
-      startIcon={<Wallet2Icon />}
+      startIcon={<Wallet2Icon size={20} />}
     />
   );
 }

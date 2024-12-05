@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import bannerGame from "../../../public/images/banner-game.webp";
+import bannerGame from "../../../public/images/banner-game.jpg";
+
 export default function GamePage() {
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
 
