@@ -19,7 +19,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "FoMoney SonicX PWA",
+  title: "FoMoney SonicX",
   description: "FoMoney PWA application",
 };
 
