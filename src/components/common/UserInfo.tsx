@@ -71,7 +71,9 @@ export default function UserInfo() {
               <div className="flex-1 rounded-lg border border-yellow-400 px-2 py-1">
                 <p className="text-xs">Deposited</p>
                 <div className="flex items-center justify-center text-center text-3xl font-bold">
-                  {(data?.deposited.toNumber() ?? 0) / LAMPORTS_PER_SOL}{" "}
+                  {(
+                    (data?.deposited.toNumber() ?? 0) / LAMPORTS_PER_SOL
+                  ).toFixed(2)}{" "}
                   <Image src={sonicx} width={24} height={24} alt="Sonic X" />
                 </div>
               </div>
