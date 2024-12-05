@@ -45,10 +45,13 @@ export default function DepositForm() {
       });
     }
 
-    if (+value % PRICE_PER_KEY !== 0) {
+    const scaledValue = Math.round(+value * 100); // Scale to integers
+    const scaledPrice = Math.round(PRICE_PER_KEY * 100);
+
+    if (scaledValue % scaledPrice !== 0) {
       return toast({
         title: "Error",
-        description: "Please enter a multiple of 0.01 SOL",
+        description: `Please enter a multiple of ${PRICE_PER_KEY} SOL`,
         variant: "destructive",
         duration: 2000,
       });
