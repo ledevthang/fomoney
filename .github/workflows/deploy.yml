@@ -45,9 +45,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
+          path: ./.next
 
       - name: Verify downloaded artifact contents
-        run: ls -la build-output
+        run: ls -la .next
 
       - name: Configure SSH key
         run: |
@@ -56,6 +57,6 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          scp -i keypair.pem -o StrictHostKeyChecking=no -r ./build-output ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/fomoney
+          scp -i keypair.pem -o StrictHostKeyChecking=no -r ./next ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/fomoney
           ssh -i keypair.pem -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-          cd /home/${{ secrets.SSH_USER }}/fomoney/build-output && npm install --omit=dev && pm2 restart all"
+          cd /home/${{ secrets.SSH_USER }}/fomoney && npm install --omit=dev && pm2 restart all"
