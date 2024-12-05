@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: ./dist # Adjust the path to match your build output directory
+          path: /.next # Adjust the path to match your build output directory
 
   # Job to deploy to EC2
   deployment:
@@ -50,6 +50,6 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          scp -i keypair.pem -o StrictHostKeyChecking=no -r ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/app
+          scp -i keypair.pem -o StrictHostKeyChecking=no -r ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/fomoney
           ssh -i keypair.pem -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-          cd /home/${{ secrets.SSH_USER }}/app && npm install --omit=dev && pm2 restart all"
+          cd /home/${{ secrets.SSH_USER }}/fomoney && npm install --omit=dev && pm2 restart all"
