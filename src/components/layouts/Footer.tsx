@@ -31,7 +31,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="mt-32">
+    <footer className="mt-20">
       <div>
         <ul className="flex flex-wrap justify-center gap-4">
           {socials.map((social) => (

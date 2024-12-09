@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
   color: white;
+  font-family: "Futura", sans-serif;
 }
 
 @layer base {
@@ -76,5 +76,19 @@ body {
   font-family: "Digital-7";
   src: url("./fonts/digital-7/Digital7.ttf") format("truetype");
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("./fonts/futura/futur.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Futura Bold";
+  src: url("./fonts/futura/Futura Bold font.ttf") format("truetype");
+  font-weight: bold;
   font-style: normal;
 }

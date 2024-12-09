@@ -11,15 +11,11 @@ import React, {
   MouseEvent,
   PropsWithChildren,
   ReactElement,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { auth } from "@/services/user";
-import { useMutation } from "@tanstack/react-query";
 
 export type ButtonProps = PropsWithChildren<{
   className?: string;
@@ -64,28 +60,6 @@ const LABELS = {
 } as const;
 
 export function CustomWalletMultiButton(props: ButtonProps) {
-  const { wallet, publicKey } = useWallet();
-
-  const mutateAuth = useMutation({
-    mutationKey: ["auth"],
-    mutationFn: auth,
-  });
-
-  const handleLogin = useCallback(async (walletAddress: string) => {
-    const response = await mutateAuth.mutateAsync({
-      provider: "wallet",
-      credential: walletAddress,
-    });
-    return response.accessToken;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (publicKey) {
-      handleLogin(publicKey.toBase58());
-    }
-  }, [wallet, publicKey, handleLogin]);
-
   return (
     <BaseWalletMultiButton
       {...props}
@@ -175,13 +149,6 @@ export function BaseWalletMultiButton({ children, labels, ...props }: Props) {
         ref={ref}
         role="menu"
       >
-        <li
-          className="wallet-adapter-dropdown-list-item"
-          onClick={async () => {}}
-          role="menuitem"
-        >
-          Switch network
-        </li>
         {publicKey ? (
           <li
             className="wallet-adapter-dropdown-list-item"

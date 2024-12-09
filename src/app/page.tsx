@@ -1,39 +1,21 @@
-import Link from "next/link";
 import Image from "next/image";
+import bannerGame from "../../public/images/banner-game.jpg";
+import { Button } from "@/components/ui/button";
 import sonicx from "../../public/images/sonicx.png";
-import { ArrowBigRight } from "lucide-react";
-import TopRankings from "@/components/common/TopRankings";
+import ButtonPlayKey from "@/components/common/ButtonPlayKey";
 
 export default function Home() {
-  const prizedPool = 5000000;
-
   return (
-    <div className="p-4">
-      <div className="mb-10 mt-4 rounded-lg border-[1px] border-yellow-500 bg-white/10 px-2 py-4 shadow-lg backdrop-blur-xl">
-        <h1 className="text-2xl font-bold text-yellow-400">
-          Play now, Pay never!
-        </h1>
-        <div className="mt-10">
-          <div className="flex items-center justify-between">
-            <p>Prized Pool</p>
-            <Link
-              href={"/staking"}
-              className="flex items-center gap-1 rounded-lg bg-red-500 px-2 text-sm"
-            >
-              Deposit
-              <ArrowBigRight size={20} />
-            </Link>
-          </div>
-
-          <div className="flex items-center justify-start gap-2 text-5xl font-bold text-yellow-500">
-            <Image src={sonicx} width={32} height={32} alt="Sonic X" />
-            <span className="font-digital text-shadow-blue">
-              {prizedPool.toLocaleString("en-US")}
-            </span>
-          </div>
-        </div>
+    <div className="">
+      <Image src={bannerGame} alt="FoMoney2048" />
+      <div className="mt-4 flex flex-col items-center justify-center gap-4">
+        <Button className="mx-auto h-12 w-[200px] bg-yellow-500 text-lg">
+          <Image src={sonicx} alt="FoMoney2048" width={20} />
+          Play with SonicX
+        </Button>
+        <ButtonPlayKey />
       </div>
-      <TopRankings />
+      <p className="mt-4 text-center">More games coming soon</p>
     </div>
   );
 }

@@ -7,16 +7,16 @@ import clsx from "clsx";
 
 const tabs = [
   {
+    value: "game",
+    href: "/",
+    icon: <LuGamepad2 size={28} />,
+    label: "Game",
+  },
+  {
     value: "staking",
     href: "/staking",
     icon: <LuDatabase size={24} />,
     label: "Deposit",
-  },
-  {
-    value: "game",
-    href: "/game",
-    icon: <LuGamepad2 size={28} />,
-    label: "Game",
   },
 ];
 export default function Tabsbar() {

@@ -6,7 +6,6 @@ import { Input } from "../ui/input";
 import DepositResultDialog from "./DepositResultDialog";
 import { useToast } from "@/hooks/use-toast";
 import ConfirmationDialog from "../common/ConfirmationDialog";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useMutation } from "@tanstack/react-query";
 import { depositHandler } from "@/services/deposit";
 import { useAnchor } from "@/hooks/useAnchor";
@@ -15,25 +14,27 @@ import { LoaderCircle } from "lucide-react";
 import { PRICE_PER_KEY } from "@/constants";
 import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
 import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
+import { useUser } from "@/store/user";
 
 export default function DepositForm() {
   const [openResultModal, setOpenResultModal] = useState(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [value, setValue] = useState("");
   const { toast } = useToast();
-  const { publicKey } = useWallet();
+  const user = useUser();
   const { program } = useAnchor();
   const { refetch } = useFetchTotalValueLocked();
   const { refetch: refetchUserSeasonInfo } = useFetchUserSeasonInfo();
 
   const handleClickDeposit = () => {
-    if (!publicKey)
+    if (!user) {
       return toast({
         title: "Error",
         description: "Please connect your wallet first",
         variant: "destructive",
         duration: 2000,
       });
+    }
 
     if (!value || +value < PRICE_PER_KEY) {
       return toast({
@@ -45,10 +46,7 @@ export default function DepositForm() {
       });
     }
 
-    const scaledValue = Math.round(+value * 100); // Scale to integers
-    const scaledPrice = Math.round(PRICE_PER_KEY * 100);
-
-    if (scaledValue % scaledPrice !== 0) {
+    if (Math.abs(+value % PRICE_PER_KEY) > Number.EPSILON) {
       return toast({
         title: "Error",
         description: `Please enter a multiple of ${PRICE_PER_KEY} SOL`,
@@ -79,10 +77,13 @@ export default function DepositForm() {
   });
 
   const startDeposit = async () => {
+    if (!user) {
+      return;
+    }
     await mutateDeposit.mutateAsync({
       program,
       amount: +value,
-      signer: new web3.PublicKey(publicKey!),
+      signer: new web3.PublicKey(user.address!),
     });
   };
 

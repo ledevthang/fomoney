@@ -3,12 +3,12 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import Image from "next/image";
 import sonicx from "../../../public/images/sonicx.png";
+import ring from "../../../public/images/ring.png";
 import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { PRIZED_POOL } from "@/constants";
 
 export default function DepositSummary() {
-  const prizedPool = 5000000;
-
   const tvlPoolData = useFetchTotalValueLocked();
 
   const depositAmount =
@@ -30,9 +30,9 @@ export default function DepositSummary() {
         <div className="text-center">
           <p className="text-xl font-bold">Prized Pool</p>
           <div className="flex items-center justify-center gap-2 text-5xl font-bold text-yellow-500">
-            <Image src={sonicx} width={48} height={48} alt="Sonic X" />
+            <Image src={ring} width={40} height={40} alt="Sonic X" />
             <span className="font-digital text-shadow-blue">
-              {prizedPool.toLocaleString("en-US")}
+              {PRIZED_POOL.toLocaleString("en-US")}
             </span>
           </div>
         </div>

@@ -8,25 +8,60 @@ import {
   DialogPortal,
   DialogTitle,
 } from "@radix-ui/react-dialog";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { DialogClose, DialogHeader } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { KeySquareIcon, Loader2Icon, XIcon } from "lucide-react";
+import {
+  KeySquareIcon,
+  Loader2Icon,
+  LogOut,
+  Wallet,
+  XIcon,
+} from "lucide-react";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import Image from "next/image";
 import sonicx from "../../../public/images/sonicx.png";
+import { useUser, useUserActions } from "@/store/user";
+import { shortenWalletAddress } from "@/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function UserInfo() {
-  const { publicKey } = useWallet();
+  const user = useUser();
+  const { reset } = useUserActions();
+  const { disconnect } = useWallet();
   const [open, setOpen] = useState(false);
 
   const { data, isLoading } = useFetchUserSeasonInfo();
 
-  if (!publicKey) return null;
+  const handleLogout = () => {
+    disconnect();
+    reset();
+  };
+
+  if (!user) return null;
 
   return (
     <>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button className="h-10 bg-[#512DA8]">
+            <Wallet />
+            <span>{shortenWalletAddress(user.address, 4)}</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem className="text-red-500" onClick={handleLogout}>
+            <LogOut /> Log out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <Button
         className="h-10 bg-[#512DA8] px-2 font-bold text-yellow-400"
         onClick={() => setOpen(true)}

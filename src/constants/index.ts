@@ -11,3 +11,5 @@ export enum EContractSeeds {
   seasonal_tvl_pool_seed = "seasonal_tvl_pool_seed",
   seasonal_pool_prize_seed = "seasonal_pool_prize_seed",
 }
+
+export const PRIZED_POOL = 6000;

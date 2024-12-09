@@ -11,3 +11,8 @@ export interface AuthRequest {
   provider: AuthProvider;
   credential: string;
 }
+
+export interface User {
+  address: string;
+  provider: AuthProvider;
+}

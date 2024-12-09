@@ -51,5 +51,6 @@ model Season {
 }
 
 enum AuthProvider {
-  wallet
+  solana
+  sonicx
 }

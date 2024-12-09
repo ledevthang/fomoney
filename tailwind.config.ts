@@ -61,6 +61,8 @@ export default {
       },
       fontFamily: {
         digital: ["Digital-7", "sans-serif"],
+        futura: ["Futura", "sans-serif"],
+        futuraBold: ["Futura Bold", "sans-serif"],
       },
       textShadow: {
         sm: "1px 1px 2px rgba(0, 0, 0, 0.5)",
@@ -70,5 +72,6 @@ export default {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate"), require("tailwindcss-textshadow")],
 } satisfies Config;
