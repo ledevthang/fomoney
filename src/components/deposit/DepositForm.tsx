@@ -64,7 +64,6 @@ export default function DepositForm() {
       setOpenResultModal(true);
       refetch();
       refetchUserSeasonInfo();
-      setValue("");
     },
     onError: (error) => {
       toast({

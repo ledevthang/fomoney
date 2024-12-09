@@ -49,11 +49,9 @@ export default function UserInfo() {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button className="h-10 bg-[#512DA8]">
-            <Wallet />
-            <span>{shortenWalletAddress(user.address, 4)}</span>
-          </Button>
+        <DropdownMenuTrigger className="flex h-10 items-center gap-2 rounded-lg bg-[#512DA8] px-2">
+          <Wallet />
+          <span>{shortenWalletAddress(user.address, 4)}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem className="text-red-500" onClick={handleLogout}>

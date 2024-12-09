@@ -63,7 +63,7 @@ export default function DepositResultDialog({
                 Earn more points by playing our{" "}
                 <span className="text-red-600">GAME!</span>
               </p>
-              <Link href={"/game"}>
+              <Link href="/">
                 <Button className="bg-red-500">Play now!</Button>
               </Link>
             </div>
