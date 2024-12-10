@@ -2,7 +2,7 @@ import { auth } from "@/services/user";
 import { useUserActions } from "@/store/user";
 import { AuthProvider } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { SONICX_IFRAME_WALLET_NAME } from "@/constants";
 
@@ -43,8 +43,6 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (publicKey) {
-      console.log("Wallet", wallet?.adapter.name);
-
       handleLogin(publicKey.toBase58(), wallet?.adapter.name);
     }
   }, [wallet, publicKey, handleLogin]);

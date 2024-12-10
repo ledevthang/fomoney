@@ -20,7 +20,6 @@ import { AuthProvider } from "@prisma/client";
 import { toast } from "@/hooks/use-toast";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletName } from "@solana/wallet-adapter-base";
-import { SONICX_IFRAME_WALLET_NAME } from "@/constants";
 import { iframeWallet } from "@/lib/solana-wallet";
 
 export default function ButtonPlaySonicX() {
