@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import bannerGame from "../../public/images/banner-game.jpg";
 import ButtonPlayKey from "@/components/common/ButtonPlayKey";
 import ButtonPlaySonicX from "@/components/common/ButtonPlaySonicX";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
+  useAuth();
+
   return (
     <div className="">
       <Image src={bannerGame} alt="FoMoney2048" />

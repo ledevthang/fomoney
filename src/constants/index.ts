@@ -13,3 +13,5 @@ export enum EContractSeeds {
 }
 
 export const PRIZED_POOL = 6000;
+
+export const SONICX_IFRAME_WALLET_NAME = "SonicX";

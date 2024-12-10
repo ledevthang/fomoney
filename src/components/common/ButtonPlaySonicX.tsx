@@ -18,6 +18,10 @@ import { DialogHeader } from "../ui/dialog";
 import { XIcon } from "lucide-react";
 import { AuthProvider } from "@prisma/client";
 import { toast } from "@/hooks/use-toast";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletName } from "@solana/wallet-adapter-base";
+import { SONICX_IFRAME_WALLET_NAME } from "@/constants";
+import { iframeWallet } from "@/lib/solana-wallet";
 
 export default function ButtonPlaySonicX() {
   const user = useUser();
@@ -65,6 +69,14 @@ const ModalConnectSonicX = ({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) => {
+  const { select, connect } = useWallet();
+
+  const handleConnectSonicX = async () => {
+    onOpenChange(false);
+    select(iframeWallet.name as WalletName);
+    await connect();
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
@@ -81,7 +93,10 @@ const ModalConnectSonicX = ({
               to continue
             </DialogTitle>
           </DialogHeader>
-          <div className="mt-10 flex cursor-pointer gap-2 px-4 py-2 hover:bg-[#1a1f2e]">
+          <div
+            className="mt-10 flex cursor-pointer gap-2 px-4 py-2 hover:bg-[#1a1f2e]"
+            onClick={handleConnectSonicX}
+          >
             <Image src={sonicx} alt="SonicX" width={28} />
             <p className="text-center text-lg">SonicX</p>
           </div>
