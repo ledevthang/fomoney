@@ -80,31 +80,26 @@ const ModalConnectSonicX = ({
   const { select, connect } = useWallet();
 
   const handleConnectSonicX = async () => {
-    try {
-      onOpenChange(false);
-      select(iframeWallet.name as WalletName);
-      await connect();
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      toast({
+    const linkSonicXApp =
+      "https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/";
+
+    if (iframeWallet.readyState !== "Installed") {
+      return toast({
         title: "Error",
         description: (
           <p>
             Please visit{" "}
-            <Link
-              className="underline"
-              href={
-                "https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/"
-              }
-              target={"_blank"}
-            >
-              https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/
+            <Link className="underline" href={linkSonicXApp} target={"_blank"}>
+              {linkSonicXApp}
             </Link>
           </p>
         ),
         variant: "destructive",
       });
     }
+    onOpenChange(false);
+    select(iframeWallet.name as WalletName);
+    await connect();
   };
 
   return (
