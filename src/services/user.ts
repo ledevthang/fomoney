@@ -2,8 +2,14 @@ import { AuthProvider } from "./../../node_modules/.prisma/client/index.d";
 import { Ranking } from "@/types/user";
 import axios from "axios";
 
-export const fetchRankings = async (): Promise<Ranking[]> => {
-  const response = await axios.get("/api/ranking");
+export const fetchRankings = async (
+  provider: AuthProvider,
+): Promise<Ranking[]> => {
+  const response = await axios.get("/api/ranking", {
+    params: {
+      provider,
+    },
+  });
   return response.data;
 };
 

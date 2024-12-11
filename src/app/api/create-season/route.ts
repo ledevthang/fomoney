@@ -38,9 +38,8 @@ export async function POST(request: NextRequest) {
       { message: "Create season success" },
       { status: 200 },
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 },

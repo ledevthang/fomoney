@@ -5,6 +5,7 @@ import bannerGame from "../../public/images/banner-game.jpg";
 import ButtonPlayKey from "@/components/common/ButtonPlayKey";
 import ButtonPlaySonicX from "@/components/common/ButtonPlaySonicX";
 import { useAuth } from "@/hooks/useAuth";
+import TopRankings from "@/components/common/TopRankings";
 
 export default function Home() {
   useAuth();
@@ -16,7 +17,8 @@ export default function Home() {
         <ButtonPlaySonicX />
         <ButtonPlayKey />
       </div>
-      <p className="mt-4 text-center">More games coming soon</p>
+      <p className="my-4 text-center">More games coming soon</p>
+      <TopRankings />
     </div>
   );
 }

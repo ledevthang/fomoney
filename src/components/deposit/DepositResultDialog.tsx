@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 
 interface DepositResultDialogProps {
   open: boolean;
+  // eslint-disable-next-line no-unused-vars
   onOpenChange: (open: boolean) => void;
   value: number;
 }

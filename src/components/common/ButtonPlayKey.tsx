@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { WalletIcon } from "lucide-react";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useUser } from "@/store/user";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { AuthProvider } from "@prisma/client";
@@ -24,6 +24,13 @@ export default function ButtonPlayKey() {
     }
   };
 
+  const buttonLabel = useMemo(() => {
+    if (!user || user.provider !== AuthProvider.solana) {
+      return "Play with Key";
+    }
+    return "Enter the Game";
+  }, [user]);
+
   return (
     <>
       <Button
@@ -31,7 +38,7 @@ export default function ButtonPlayKey() {
         className="mx-auto h-12 w-[200px] bg-[#512ca9] text-lg"
       >
         <WalletIcon />
-        Play with Key
+        {buttonLabel}
       </Button>
       <ConfirmationDialog
         open={openConfirmationModal}

@@ -1,6 +1,6 @@
 import { FomoneyStaking } from "@/utils/smart-contracts/fomoney_staking";
 import { Program, web3 } from "@coral-xyz/anchor";
-import { LAMPORTS_PER_SOL, PublicKey, Transaction } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 
 export const depositHandler = async ({
@@ -12,14 +12,6 @@ export const depositHandler = async ({
   signer: web3.PublicKey;
   program: Program<FomoneyStaking>;
 }) => {
-  const [masterAccount] = PublicKey.findProgramAddressSync(
-    [Buffer.from("authority")],
-    program.programId,
-  );
-  const masterData = await program.account.master.fetch(masterAccount);
-
-  console.log("masterData", masterData);
-
   const { blockhash, lastValidBlockHeight } =
     await program.provider.connection.getLatestBlockhash("confirmed");
 

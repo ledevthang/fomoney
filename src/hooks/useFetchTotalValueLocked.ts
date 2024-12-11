@@ -24,11 +24,6 @@ export const useFetchTotalValueLocked = () => {
       );
       const seasonalTvlPoolData =
         await program.account.seasonTvlPool.fetch(seasonalTvlPool);
-      console.log(
-        "seasonalTvlPoolData",
-        seasonalTvlPoolData,
-        seasonalTvlPoolData.seasonId.toNumber(),
-      );
 
       return seasonalTvlPoolData;
     },

@@ -19,20 +19,32 @@ export default function TopRankings() {
     [],
   );
 
-  return (
-    <div>
-      <SectionTitle label="Top Rankers" />
+  const renderList = useMemo(() => {
+    if (rankings.data?.length === 0)
+      return (
+        <div className="flex h-10 items-center justify-center gap-1">
+          No records found
+        </div>
+      );
+    return (
       <div className="space-y-4">
         {rankings.isFetching
           ? renderPlacerholder
           : rankings.data?.map((data, index) => (
               <RankingListItem
-                key={data.wallet}
+                key={data.User.id}
                 data={data}
                 index={index + 1}
               />
             ))}
       </div>
+    );
+  }, [rankings]);
+
+  return (
+    <div className="p-4">
+      <SectionTitle label="Leaderboard" />
+      {renderList}
     </div>
   );
 }

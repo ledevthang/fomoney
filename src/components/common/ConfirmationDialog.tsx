@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 
 interface ConfirmationDialogProps {
   open: boolean;
+  // eslint-disable-next-line no-unused-vars
   onOpenChange: (open: boolean) => void;
   title?: string; // Customizable title
   description?: string; // Customizable description

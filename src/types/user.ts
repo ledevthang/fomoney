@@ -1,10 +1,11 @@
 import { AuthProvider } from "@prisma/client";
 
 export interface Ranking {
-  name: string;
-  image: string;
-  points: number;
-  wallet: string;
+  point: number;
+  User: {
+    id: string;
+    wallet: string;
+  };
 }
 
 export interface AuthRequest {

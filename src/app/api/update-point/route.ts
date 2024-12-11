@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { UpdatePointRequest } from "@/types/season";
 import { NextRequest, NextResponse } from "next/server";
-import { validateAuthorizationHeader, verifyAccessToken } from "@/lib/auth";
+import { validateAuthorizationHeader } from "@/lib/auth";
 
 const MAX_POINT_PER_GAME = 2048;
 
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const pointRecord = await prisma.point.upsert({
+    await prisma.point.upsert({
       where: {
         userId_seasonId: {
           userId: user.id,
@@ -76,6 +76,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ message: "Success" }, { status: 200 });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { message: "Internal server error" },

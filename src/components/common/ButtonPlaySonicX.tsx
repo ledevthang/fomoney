@@ -13,7 +13,7 @@ import {
   DialogPortal,
   DialogTitle,
 } from "@radix-ui/react-dialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { DialogHeader } from "../ui/dialog";
 import { XIcon } from "lucide-react";
 import { AuthProvider } from "@prisma/client";
@@ -45,6 +45,13 @@ export default function ButtonPlaySonicX() {
     router.push("/game/play");
   };
 
+  const buttonLabel = useMemo(() => {
+    if (!user || user.provider !== AuthProvider.sonicx) {
+      return "Play with SonicX";
+    }
+    return "Enter the Game";
+  }, [user]);
+
   return (
     <>
       <Button
@@ -52,7 +59,7 @@ export default function ButtonPlaySonicX() {
         onClick={handleClickPlay}
       >
         <Image src={sonicx} alt="FoMoney2048" width={20} />
-        Play with SonicX
+        {buttonLabel}
       </Button>
       <ModalConnectSonicX
         open={openModalConnectSonicX}
@@ -67,6 +74,7 @@ const ModalConnectSonicX = ({
   onOpenChange,
 }: {
   open: boolean;
+  // eslint-disable-next-line no-unused-vars
   onOpenChange: (open: boolean) => void;
 }) => {
   const { select, connect } = useWallet();
@@ -76,6 +84,7 @@ const ModalConnectSonicX = ({
       onOpenChange(false);
       select(iframeWallet.name as WalletName);
       await connect();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: "Error",
