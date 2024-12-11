@@ -8,6 +8,7 @@ import { Loader2Icon } from "lucide-react";
 
 export default function TopRankings() {
   const rankings = useFetchRankings();
+  const { rankings: ranking, season } = rankings.data ?? {};
 
   const renderPlacerholder = useMemo(
     () => (
@@ -20,7 +21,7 @@ export default function TopRankings() {
   );
 
   const renderList = useMemo(() => {
-    if (rankings.data?.length === 0)
+    if (!ranking || ranking.length === 0)
       return (
         <div className="flex h-10 items-center justify-center gap-1">
           No records found
@@ -30,7 +31,7 @@ export default function TopRankings() {
       <div className="space-y-4">
         {rankings.isFetching
           ? renderPlacerholder
-          : rankings.data?.map((data, index) => (
+          : ranking.map((data, index) => (
               <RankingListItem
                 key={data.User.id}
                 data={data}
@@ -39,11 +40,11 @@ export default function TopRankings() {
             ))}
       </div>
     );
-  }, [rankings]);
+  }, [ranking, rankings.isFetching, renderPlacerholder]);
 
   return (
     <div className="p-4">
-      <SectionTitle label="Leaderboard" />
+      <SectionTitle label={`Leaderboard - Season ${season?.name ?? "-"}`} />
       {renderList}
     </div>
   );

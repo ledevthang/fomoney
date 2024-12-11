@@ -1,4 +1,4 @@
-import { AuthProvider } from "@prisma/client";
+import { AuthProvider, Season } from "@prisma/client";
 
 export interface Ranking {
   point: number;
@@ -16,4 +16,9 @@ export interface AuthRequest {
 export interface User {
   address: string;
   provider: AuthProvider;
+}
+
+export interface RankingResponse {
+  rankings: Ranking[];
+  season: Season;
 }

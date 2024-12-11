@@ -8,16 +8,24 @@ export async function GET(request: NextRequest) {
   const provider =
     (searchParams.get("provider") as AuthProvider) ?? AuthProvider.sonicx;
 
+  const currentSeason = await prisma.season.findFirst({
+    orderBy: {
+      endtime: "desc",
+    },
+  });
   const result = await prisma.point.findMany({
     where: {
       User: {
         provider: provider,
       },
+      season: {
+        name: currentSeason?.name,
+      },
     },
     orderBy: {
       point: "desc",
     },
-    take: 10,
+    take: 50,
     select: {
       point: true,
       User: {
@@ -29,5 +37,8 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  return NextResponse.json(result, { status: 200 });
+  return NextResponse.json(
+    { rankings: result, season: currentSeason },
+    { status: 200 },
+  );
 }
