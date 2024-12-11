@@ -72,7 +72,8 @@ export default function ButtonPlayKey() {
       <ConfirmationDialog
         open={openConfirmationModal}
         onOpenChange={setOpenConfirmationModal}
-        onConfirm={() => redirect("/game/play")}
+        // onConfirm={() => redirect("/game/play")}
+        onConfirm={() => redirect("/game")}
         description="This will consume your balance of 1 KEY."
         confirmText="Play"
       />
