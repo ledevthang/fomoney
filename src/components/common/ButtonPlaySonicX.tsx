@@ -21,6 +21,7 @@ import { toast } from "@/hooks/use-toast";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletName } from "@solana/wallet-adapter-base";
 import { iframeWallet } from "@/lib/solana-wallet";
+import Link from "next/link";
 
 export default function ButtonPlaySonicX() {
   const user = useUser();
@@ -71,9 +72,30 @@ const ModalConnectSonicX = ({
   const { select, connect } = useWallet();
 
   const handleConnectSonicX = async () => {
-    onOpenChange(false);
-    select(iframeWallet.name as WalletName);
-    await connect();
+    try {
+      onOpenChange(false);
+      select(iframeWallet.name as WalletName);
+      await connect();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: (
+          <p>
+            Please visit{" "}
+            <Link
+              className="underline"
+              href={
+                "https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/"
+              }
+              target={"_blank"}
+            >
+              https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/
+            </Link>
+          </p>
+        ),
+        variant: "destructive",
+      });
+    }
   };
 
   return (

@@ -82,7 +82,7 @@ export default function UserInfo() {
           </Button>
           <Dialog onOpenChange={setOpen} open={open}>
             <DialogPortal>
-              <DialogOverlay className="fixed inset-0 bg-black/80" />
+              <DialogOverlay className="fixed inset-0 bg-black/70" />
               <DialogContent
                 aria-describedby="description"
                 className="fixed left-1/2 top-1/3 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-[#6b59dd] p-4 shadow-lg"

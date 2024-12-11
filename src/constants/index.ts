@@ -15,3 +15,6 @@ export enum EContractSeeds {
 export const PRIZED_POOL = 6000;
 
 export const SONICX_IFRAME_WALLET_NAME = "SonicX";
+
+// 7 days
+export const SEASON_DURATION = 7 * 24 * 60 * 60 * 1000;
