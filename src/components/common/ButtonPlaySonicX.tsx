@@ -42,7 +42,7 @@ export default function ButtonPlaySonicX() {
       });
     }
 
-    router.push("/game/play");
+    router.push("/game");
   };
 
   const buttonLabel = useMemo(() => {
