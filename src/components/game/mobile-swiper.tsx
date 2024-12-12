@@ -9,7 +9,7 @@ import {
 export type SwipeInput = { deltaX: number; deltaY: number };
 
 type MobileSwiperProps = PropsWithChildren<{
-  onSwipe: (_: SwipeInput) => void;
+  onSwipe: (swipeInput: SwipeInput) => void;
 }>;
 
 export default function MobileSwiper({ children, onSwipe }: MobileSwiperProps) {

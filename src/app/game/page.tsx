@@ -27,8 +27,14 @@ export default function Home() {
         if (userTeam) {
             return;
         }
-        document.querySelector('.pillred_2').classList.remove('selected');
-        document.querySelector('.pillblue_2').classList.add('selected');
+        const redElement = document.querySelector('.pillred_2')
+        const blueElement = document.querySelector('.pillblue_2')
+        if (redElement instanceof HTMLElement){
+            redElement.classList.remove('selected');
+        }
+        if (blueElement instanceof HTMLElement){
+            blueElement.classList.add('selected');
+        }
         setSelectTeam('chain');
     }
 
@@ -37,8 +43,14 @@ export default function Home() {
         if (userTeam) {
             return;
         }
-        document.querySelector('.pillblue_2').classList.remove('selected');
-        document.querySelector('.pillred_2').classList.add('selected');
+        const blueElement = document.querySelector('.pillblue_2');
+        const redElement = document.querySelector('.pillred_2');
+        if (blueElement instanceof HTMLElement){
+            blueElement.classList.remove('selected');
+        }
+        if (redElement instanceof HTMLElement){
+            redElement.classList.add('selected');
+        }
         setSelectTeam('meme');
     }
 

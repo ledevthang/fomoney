@@ -19,7 +19,7 @@ type MoveDirection = "move_up" | "move_down" | "move_left" | "move_right";
 export const GameContext = createContext({
   score: 0,
   status: "ongoing",
-  moveTiles: (_: MoveDirection) => {},
+  moveTiles: (type: MoveDirection) => {},
   getTiles: () => [] as Tile[],
   startGame: () => {},
 });
@@ -88,18 +88,18 @@ export default function GameProvider({ children }: PropsWithChildren) {
     for (let x = 0; x < maxIndex; x += 1) {
       for (let y = 0; y < maxIndex; y += 1) {
         if (
-          isNil(gameState.board[x][y]) ||
-          isNil(gameState.board[x + 1][y]) ||
-          isNil(gameState.board[x][y + 1])
+          isNil(gameState.board[x][y])
+          // isNil(gameState.board[x + 1][y]) ||
+          // isNil(gameState.board[x][y + 1])
         ) {
           return;
         }
 
-        if (tiles[board[x][y]].value === tiles[board[x + 1][y]].value) {
+        if (x<maxIndex && gameState.board[x + 1][y] && tiles[board[x][y]].value === tiles[board[x + 1][y]].value) {
           return;
         }
 
-        if (tiles[board[x][y]].value === tiles[board[x][y + 1]].value) {
+        if (y<maxIndex && gameState.board[x][y + 1] && tiles[board[x][y]].value === tiles[board[x][y + 1]].value) {
           return;
         }
       }
