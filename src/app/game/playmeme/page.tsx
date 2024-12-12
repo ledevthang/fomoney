@@ -4,7 +4,6 @@ import Image from "next/image";
 import Board from "@/components/game/board";
 import Score from "@/components/game/score";
 import styles from "@/styles/index.module.css";
-import logo from '@/assets/images/logo.png';
 import pillred from '../../../assets/images/pillred.png';
 import GameProvider from "@/context/game-context";
 import "@/styles/globals.css";

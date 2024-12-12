@@ -69,7 +69,7 @@ export default function Board({team}: Team) {
     return getTiles().map((tile: TileModel) => {
       // console.log('here ',team)
       tile.team = team
-      let new_tile = { ...tile }
+      const new_tile = { ...tile }
       return (
         <Tile key={`${tile.id}`} {...new_tile} />
       )
