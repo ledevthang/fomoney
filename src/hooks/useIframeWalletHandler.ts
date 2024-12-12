@@ -22,7 +22,6 @@ export function useIframeWalletHandler() {
 
       const iframeWindow = event.source as any;
       if (event.data.target === "iframe-wallet-adapter") {
-        console.info("useIframeWalletHandler - onMessage", event.data);
         const { type, id, payload, target } = event.data as {
           type: MessageType;
           id: string;

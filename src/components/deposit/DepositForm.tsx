@@ -15,6 +15,7 @@ import { PRICE_PER_KEY } from "@/constants";
 import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
 import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
 import { useUser } from "@/store/user";
+import { AuthProvider } from "@prisma/client";
 
 export default function DepositForm() {
   const [openResultModal, setOpenResultModal] = useState(false);
@@ -27,10 +28,10 @@ export default function DepositForm() {
   const { refetch: refetchUserSeasonInfo } = useFetchUserSeasonInfo();
 
   const handleClickDeposit = () => {
-    if (!user) {
+    if (!user || user.provider !== AuthProvider.solana) {
       return toast({
         title: "Error",
-        description: "Please connect your wallet first",
+        description: "Please connect your Solana wallet first",
         variant: "destructive",
         duration: 2000,
       });

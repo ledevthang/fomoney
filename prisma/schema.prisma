@@ -35,6 +35,7 @@ model Point {
   season    Season   @relation(fields: [seasonId], references: [id])
   seasonId  String   @db.Uuid
 
+  @@unique([userId, seasonId])
   @@map("point")
 }
 
@@ -43,8 +44,7 @@ model Season {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   endtime   DateTime
-  account   String   @unique
-  name      String
+  name      String   @unique
   Point     Point[]
 
   @@map("season")

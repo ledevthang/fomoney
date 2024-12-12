@@ -13,11 +13,15 @@ import {
   DialogPortal,
   DialogTitle,
 } from "@radix-ui/react-dialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { DialogHeader } from "../ui/dialog";
 import { XIcon } from "lucide-react";
 import { AuthProvider } from "@prisma/client";
 import { toast } from "@/hooks/use-toast";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletName } from "@solana/wallet-adapter-base";
+import { iframeWallet } from "@/lib/solana-wallet";
+import Link from "next/link";
 
 export default function ButtonPlaySonicX() {
   const user = useUser();
@@ -41,6 +45,13 @@ export default function ButtonPlaySonicX() {
     router.push("/game/play");
   };
 
+  const buttonLabel = useMemo(() => {
+    if (!user || user.provider !== AuthProvider.sonicx) {
+      return "Play with SonicX";
+    }
+    return "Enter the Game";
+  }, [user]);
+
   return (
     <>
       <Button
@@ -48,7 +59,7 @@ export default function ButtonPlaySonicX() {
         onClick={handleClickPlay}
       >
         <Image src={sonicx} alt="FoMoney2048" width={20} />
-        Play with SonicX
+        {buttonLabel}
       </Button>
       <ModalConnectSonicX
         open={openModalConnectSonicX}
@@ -63,8 +74,34 @@ const ModalConnectSonicX = ({
   onOpenChange,
 }: {
   open: boolean;
+  // eslint-disable-next-line no-unused-vars
   onOpenChange: (open: boolean) => void;
 }) => {
+  const { select, connect } = useWallet();
+
+  const handleConnectSonicX = async () => {
+    const linkSonicXApp =
+      "https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/";
+
+    if (iframeWallet.readyState !== "Installed") {
+      return toast({
+        title: "Error",
+        description: (
+          <p>
+            Please visit{" "}
+            <Link className="underline" href={linkSonicXApp} target={"_blank"}>
+              {linkSonicXApp}
+            </Link>
+          </p>
+        ),
+        variant: "destructive",
+      });
+    }
+    onOpenChange(false);
+    select(iframeWallet.name as WalletName);
+    await connect();
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
@@ -81,7 +118,10 @@ const ModalConnectSonicX = ({
               to continue
             </DialogTitle>
           </DialogHeader>
-          <div className="mt-10 flex cursor-pointer gap-2 px-4 py-2 hover:bg-[#1a1f2e]">
+          <div
+            className="mt-10 flex cursor-pointer gap-2 px-4 py-2 hover:bg-[#1a1f2e]"
+            onClick={handleConnectSonicX}
+          >
             <Image src={sonicx} alt="SonicX" width={28} />
             <p className="text-center text-lg">SonicX</p>
           </div>

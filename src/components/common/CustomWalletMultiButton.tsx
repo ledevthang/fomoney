@@ -21,6 +21,7 @@ export type ButtonProps = PropsWithChildren<{
   className?: string;
   disabled?: boolean;
   endIcon?: ReactElement;
+  // eslint-disable-next-line no-unused-vars
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   startIcon?: ReactElement;
   style?: CSSProperties;
@@ -30,6 +31,7 @@ export type ButtonProps = PropsWithChildren<{
 type Props = ButtonProps & {
   labels: Omit<
     {
+      // eslint-disable-next-line no-unused-vars
       [TButtonState in ReturnType<
         typeof useWalletMultiButton
       >["buttonState"]]: string;
