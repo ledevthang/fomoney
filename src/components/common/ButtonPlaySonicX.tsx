@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import sonicx from "../../../public/images/sonicx.png";
 import Image from "next/image";
 import { useUser } from "@/store/user";
-import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogClose,
@@ -22,11 +21,13 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletName } from "@solana/wallet-adapter-base";
 import { iframeWallet } from "@/lib/solana-wallet";
 import Link from "next/link";
+import SelectGameDialog from "./SelectGameDialog";
 
 export default function ButtonPlaySonicX() {
   const user = useUser();
-  const router = useRouter();
   const [openModalConnectSonicX, setOpenModalConnectSonicX] = useState(false);
+  const [openSelectGameModal, setOpenSelectGameModal] = useState(false);
+
   const handleClickPlay = () => {
     if (!user) {
       setOpenModalConnectSonicX(true);
@@ -41,8 +42,7 @@ export default function ButtonPlaySonicX() {
         duration: 2000,
       });
     }
-
-    router.push("/game/play");
+    setOpenSelectGameModal(true);
   };
 
   const buttonLabel = useMemo(() => {
@@ -64,6 +64,10 @@ export default function ButtonPlaySonicX() {
       <ModalConnectSonicX
         open={openModalConnectSonicX}
         onOpenChange={setOpenModalConnectSonicX}
+      />
+      <SelectGameDialog
+        open={openSelectGameModal}
+        onOpenChange={setOpenSelectGameModal}
       />
     </>
   );

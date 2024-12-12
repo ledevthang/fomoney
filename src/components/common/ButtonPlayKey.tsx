@@ -6,22 +6,27 @@ import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import { redirect } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useUser } from "@/store/user";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { AuthProvider } from "@prisma/client";
+import { toast } from "@/hooks/use-toast";
 
 export default function ButtonPlayKey() {
   const user = useUser();
-  const { setVisible } = useWalletModal();
 
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
 
   const handleClickPlayWithKey = () => {
+    return toast({
+      title: "Coming soon!",
+      description: "Please try again later",
+      duration: 2000,
+    });
+
     // Open modal connnect Solana Wallet
-    if (!user || user.provider !== AuthProvider.solana) {
-      setVisible(true);
-    } else {
-      setOpenConfirmationModal(true);
-    }
+    // if (!user || user.provider !== AuthProvider.solana) {
+    //   setVisible(true);
+    // } else {
+    //   setOpenConfirmationModal(true);
+    // }
   };
 
   const buttonLabel = useMemo(() => {
@@ -30,6 +35,10 @@ export default function ButtonPlayKey() {
     }
     return "Enter the Game";
   }, [user]);
+
+  const handleConsumeKey = () => {
+    redirect("/game/play");
+  };
 
   return (
     <>
@@ -43,8 +52,7 @@ export default function ButtonPlayKey() {
       <ConfirmationDialog
         open={openConfirmationModal}
         onOpenChange={setOpenConfirmationModal}
-        // onConfirm={() => redirect("/game/play")}
-        onConfirm={() => redirect("/game")}
+        onConfirm={handleConsumeKey}
         description="This will consume your balance of 1 KEY."
         confirmText="Play"
       />

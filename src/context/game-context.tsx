@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import {
   PropsWithChildren,
   createContext,
@@ -19,9 +21,9 @@ type MoveDirection = "move_up" | "move_down" | "move_left" | "move_right";
 export const GameContext = createContext({
   score: 0,
   status: "ongoing",
-  moveTiles: (type: MoveDirection) => { },
+  moveTiles: (type: MoveDirection) => {},
   getTiles: () => [] as Tile[],
-  startGame: () => { },
+  startGame: () => {},
 });
 
 export default function GameProvider({ children }: PropsWithChildren) {
@@ -47,7 +49,7 @@ export default function GameProvider({ children }: PropsWithChildren) {
       const newTile = {
         position: emptyCells[cellIndex],
         value: 2,
-        team: '',
+        team: "",
       };
       dispatch({ type: "create_tile", tile: newTile });
     }
@@ -68,8 +70,14 @@ export default function GameProvider({ children }: PropsWithChildren) {
 
   const startGame = () => {
     dispatch({ type: "reset_game" });
-    dispatch({ type: "create_tile", tile: { position: [0, 1], value: 2, team: '' } });
-    dispatch({ type: "create_tile", tile: { position: [0, 2], value: 2, team: '' } });
+    dispatch({
+      type: "create_tile",
+      tile: { position: [0, 1], value: 2, team: "" },
+    });
+    dispatch({
+      type: "create_tile",
+      tile: { position: [0, 2], value: 2, team: "" },
+    });
   };
 
 
@@ -97,11 +105,19 @@ export default function GameProvider({ children }: PropsWithChildren) {
           return;
         }
 
-        if (x < maxIndex && gameState.board[x + 1][y] && tiles[board[x][y]].value === tiles[board[x + 1][y]].value) {
+        if (
+          x < maxIndex &&
+          gameState.board[x + 1][y] &&
+          tiles[board[x][y]].value === tiles[board[x + 1][y]].value
+        ) {
           return;
         }
 
-        if (y < maxIndex && gameState.board[x][y + 1] && tiles[board[x][y]].value === tiles[board[x][y + 1]].value) {
+        if (
+          y < maxIndex &&
+          gameState.board[x][y + 1] &&
+          tiles[board[x][y]].value === tiles[board[x][y + 1]].value
+        ) {
           return;
         }
       }
@@ -109,8 +125,6 @@ export default function GameProvider({ children }: PropsWithChildren) {
 
     dispatch({ type: "update_status", status: "lost" });
   };
-
-
 
   useEffect(() => {
     if (gameState.hasChanged) {

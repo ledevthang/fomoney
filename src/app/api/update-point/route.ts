@@ -3,8 +3,6 @@ import { UpdatePointRequest } from "@/types/season";
 import { NextRequest, NextResponse } from "next/server";
 import { validateAuthorizationHeader } from "@/lib/auth";
 
-const MAX_POINT_PER_GAME = 2048;
-
 /**
  * Update user points for a specific season
  */
@@ -26,11 +24,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (point > MAX_POINT_PER_GAME || point < 0) {
-      return NextResponse.json(
-        { error: `Invalid point. Must be between 0 and ${MAX_POINT_PER_GAME}` },
-        { status: 400 },
-      );
+    if (point < 0) {
+      return NextResponse.json({ error: `Invalid point.` }, { status: 400 });
     }
     console.log(typeof season,season)
 
