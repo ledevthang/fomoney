@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 export default function Splash({ heading = "You won!", type = "" }) {
   const { startGame } = useContext(GameContext);
-  startGame
+  startGame();
 
   return (
     <div className={`${styles.splash} ${type === "won" && styles.win}`}>

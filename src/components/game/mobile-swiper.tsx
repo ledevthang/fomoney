@@ -9,6 +9,7 @@ import {
 export type SwipeInput = { deltaX: number; deltaY: number };
 
 type MobileSwiperProps = PropsWithChildren<{
+  // eslint-disable-next-line no-unused-vars
   onSwipe: (swipeInput: SwipeInput) => void;
 }>;
 

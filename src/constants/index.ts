@@ -19,3 +19,10 @@ export const SONICX_IFRAME_WALLET_NAME = "SonicX";
 
 // 7 days
 export const SEASON_DURATION = 7 * 24 * 60 * 60 * 1000;
+
+export const DAPP_QUERY_KEY = "dapp";
+
+export enum EGameType {
+  inner = "inner",
+  embed = "embed",
+}
