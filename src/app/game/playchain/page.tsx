@@ -8,9 +8,17 @@ import pillblue from '../../../assets/images/pillblue.png';
 import GameProvider from "@/context/game-context";
 import "@/styles/globals.css";
 import '@/styles/style.css';
+import { useAuth } from "@/hooks/useAuth";
+
+
 
 export default function Playchain() {
   const data = { team: 'chain' };
+  useAuth();
+
+  // console.log(accessToken);
+
+
 
   return (
     <GameProvider >

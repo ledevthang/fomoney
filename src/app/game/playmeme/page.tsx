@@ -8,10 +8,17 @@ import pillred from '../../../assets/images/pillred.png';
 import GameProvider from "@/context/game-context";
 import "@/styles/globals.css";
 import '@/styles/style.css';
+import { useAuth } from "@/hooks/useAuth";
+
+
 
 
 export default function Playmeme() {
   const data = { team: 'me' };
+  useAuth();
+
+
+
 
   return (
     <GameProvider >

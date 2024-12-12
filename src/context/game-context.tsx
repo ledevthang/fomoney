@@ -74,11 +74,6 @@ export default function GameProvider({ children }: PropsWithChildren) {
 
 
 
-
-
-
-
-
   const checkGameState = () => {
     const isWon =
       Object.values(gameState.tiles).filter((t) => t.value === gameWinTileValue)

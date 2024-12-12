@@ -32,10 +32,15 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+    console.log(typeof season,season)
 
     const seasonExisted = await prisma.season.findUnique({
       where: { name: season },
     });
+
+    console.log(seasonExisted)
+
+
     if (!seasonExisted) {
       return NextResponse.json(
         { message: "Season not found" },
@@ -47,6 +52,8 @@ export async function POST(request: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { wallet: decoded.userId },
     });
+
+    console.log(user)
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });

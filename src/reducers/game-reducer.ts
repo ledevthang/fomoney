@@ -191,6 +191,7 @@ export default function gameReducer(
         score,
       };
     }
+
     case "move_left": {
       const newBoard = createBoard();
       const newTiles: TileMap = {};

@@ -57,6 +57,7 @@ export default function Home() {
     const handleGo = () => {
 
         if (!selectTeam) {
+            alert('Please select team first')
             setTeamWarning(true);
             return;
         }
