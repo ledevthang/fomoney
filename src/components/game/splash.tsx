@@ -14,7 +14,6 @@ export default function Splash({ heading = "You won!", type = "" }) {
 
   const handleSubmit = async () => {
     const status = await submitScore(accessToken, score, '0')
-    console.log(status)
     if (status == 200) {
       startGame();
     }

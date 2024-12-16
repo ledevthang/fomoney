@@ -27,13 +27,11 @@ export async function POST(request: NextRequest) {
     if (point < 0) {
       return NextResponse.json({ error: `Invalid point.` }, { status: 400 });
     }
-    console.log(typeof season,season)
 
     const seasonExisted = await prisma.season.findUnique({
       where: { name: season },
     });
 
-    console.log(seasonExisted)
 
 
     if (!seasonExisted) {
@@ -48,7 +46,6 @@ export async function POST(request: NextRequest) {
       where: { wallet: decoded.userId },
     });
 
-    console.log(user)
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
