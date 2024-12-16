@@ -28,6 +28,8 @@ export const useUserStore = create<UserStore & UserActions>((set) => ({
   reset: () => set(initStore),
 }));
 
+export const useAccessToken = () => useUserStore((state) => state.accessToken);
+
 export const useUser = () => useUserStore((state) => state.user);
 
 export const useUpdateUser = () => useUserStore((state) => state.updateUser);
