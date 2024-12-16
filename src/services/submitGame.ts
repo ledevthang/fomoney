@@ -16,7 +16,6 @@ export const submitScore = async (accessToken:string | null, score: number, seas
         point: score,
         season: season,
     });
-    // console.log(body,accessToken)
 
     try {
         const response = await fetch(url, {
@@ -25,17 +24,20 @@ export const submitScore = async (accessToken:string | null, score: number, seas
             body: body,
         });
 
-        console.log(response);
         if (response.ok) {
             const data = await response.json();
             alert('You have successfully submit your game!')
-            console.log('Score submitted successfully:', data);
+            // console.log('Score submitted successfully:', data);
             return response.status;
         } else {
-            console.error('Error submitting score:', response.statusText);
+            alert('Submit failed')
+
+            // console.error('Error submitting score:', response.statusText);
         }
     } catch (error) {
-        console.error('Request failed', error);
+        alert('Submit failed')
+
+        // console.error('Request failed', error);
     }
     return;
 };
