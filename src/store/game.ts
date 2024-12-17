@@ -9,7 +9,7 @@ export interface GameActions {
   setAllowPlay: (allowPlay: boolean) => void;
 }
 const initGameStore = {
-  allowPlay: true,
+  allowPlay: false,
 };
 
 export const useGameStore = create<GameStore & GameActions>((set) => ({

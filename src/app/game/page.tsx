@@ -70,7 +70,7 @@ export default function Home() {
     setTeamWarning(false);
   };
 
-  if (!allowPlayGame && user?.provider === AuthProvider.solana) {
+  if (!allowPlayGame && user?.provider !== AuthProvider.sonicx) {
     return (
       <div className="container">
         <div className="homebody">
