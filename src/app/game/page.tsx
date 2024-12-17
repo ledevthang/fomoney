@@ -1,26 +1,22 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import pillblue from "../../assets/images/pillblue.png";
 import pillred from "../../assets/images/pillred.png";
 import sonic from "../../assets/images/sonic-logo.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "@/styles/globals.css";
 import "@/styles/style.css";
 import { useAllowPlay } from "@/store/game";
-import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useUser } from "@/store/user";
 import { AuthProvider } from "@prisma/client";
 
 export default function Home() {
-  const [openRules, setOpenRules] = useState(false);
   const [selectTeam, setSelectTeam] = useState("");
-  const [userTeam, setUserTeam] = useState("");
-  const [teamWarning, setTeamWarning] = useState(false);
+  const [userTeam] = useState("");
+  const [, setTeamWarning] = useState(false);
   const allowPlayGame = useAllowPlay();
   const user = useUser();
 
@@ -64,10 +60,6 @@ export default function Home() {
     }
     // router.push(`/play${selectTeam}`)
     redirect(`/game/play${selectTeam}`);
-  };
-
-  const handleTeamWarning = () => {
-    setTeamWarning(false);
   };
 
   if (!allowPlayGame && user?.provider !== AuthProvider.sonicx) {
@@ -149,5 +141,3 @@ export default function Home() {
     </div>
   );
 }
-
-// export default HomePageSonic;
