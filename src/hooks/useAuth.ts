@@ -19,6 +19,7 @@ export const useAuth = () => {
         provider: variables.provider!,
         address: variables.credential!,
         point: data.user.point,
+        season: data.user.season,
       });
       setAccessToken(data.accessToken);
     },

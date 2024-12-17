@@ -64,7 +64,6 @@ export default function Home() {
     }
     // router.push(`/play${selectTeam}`)
     redirect(`/game/play${selectTeam}`);
-    return;
   };
 
   const handleTeamWarning = () => {

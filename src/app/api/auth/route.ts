@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
           point: point?.point ?? 0,
           wallet: existed?.wallet,
           provider: existed?.provider,
+          season: latestSeason?.name,
         },
       },
       { status: 200 },

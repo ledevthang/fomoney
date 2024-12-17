@@ -3,7 +3,7 @@ import styles from "@/styles/splash.module.css";
 import { useContext } from "react";
 import { submitScore } from "@/services/submitGame";
 import { useAuth } from "@/hooks/useAuth";
-import { useUserStore } from "@/store/user";
+import { useUser, useUserStore } from "@/store/user";
 import { useState } from "react";
 import {
   Dialog,
@@ -13,6 +13,9 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { useSetAllowPlay } from "@/store/game";
+import { AuthProvider } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 export default function Splash({ heading = "You won!", type = "" }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,17 +25,24 @@ export default function Splash({ heading = "You won!", type = "" }) {
   const { score } = useContext(GameContext);
   useAuth();
   const accessToken = useUserStore.getState().accessToken;
+  const setAllowPlay = useSetAllowPlay();
+  const user = useUser();
+  const router = useRouter();
 
   const handleSubmit = async () => {
     setSubmitFailed(false);
     setIsLoading(true);
-    const status = await submitScore(accessToken, score, "0");
+    const status = await submitScore(accessToken, score, user?.season ?? "");
     if (status == 200) {
       setIsLoading(false);
       setSubmitSuccess(true);
     } else {
       setIsLoading(false);
       setSubmitFailed(true);
+    }
+    if (user?.provider === AuthProvider.solana) {
+      setAllowPlay(false);
+      router.push("/");
     }
   };
 

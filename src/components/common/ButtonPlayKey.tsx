@@ -14,6 +14,7 @@ import { web3 } from "@coral-xyz/anchor";
 import { toast } from "@/hooks/use-toast";
 import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
 import { useRouter } from "next/navigation";
+import { useSetAllowPlay } from "@/store/game";
 
 export default function ButtonPlayKey() {
   const user = useUser();
@@ -22,6 +23,7 @@ export default function ButtonPlayKey() {
   const { refetch: refetchUserSeasonInfo, data } = useFetchUserSeasonInfo();
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const router = useRouter();
+  const setAllowPlay = useSetAllowPlay();
 
   const handleClickPlayWithKey = () => {
     // Open modal connnect Solana Wallet
@@ -43,6 +45,7 @@ export default function ButtonPlayKey() {
     mutationFn: consumeKeyHandler,
     mutationKey: ["consumeKeyJoinGame"],
     onSuccess: () => {
+      setAllowPlay(true);
       refetchUserSeasonInfo();
       setOpenConfirmationModal(false);
       router.push("/game");

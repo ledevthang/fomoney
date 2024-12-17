@@ -17,6 +17,7 @@ export interface User {
   address: string;
   provider: AuthProvider;
   point?: number;
+  season: string;
 }
 
 export interface RankingResponse {
