@@ -50,15 +50,25 @@ export default function MobileSwiper({ children, onSwipe }: MobileSwiperProps) {
     [startX, startY, onSwipe],
   );
 
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (!wrapperRef.current?.contains(e.target as Node)) {
+      return;
+    }
+
+    e.preventDefault(); // Prevent the page from scrolling when moving
+  }, []);
+
   useEffect(() => {
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
     window.addEventListener("touchend", handleTouchEnd, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false }); // Prevent scrolling on touchmove
 
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [handleTouchStart, handleTouchEnd]);
+  }, [handleTouchStart, handleTouchEnd, handleTouchMove]);
 
   return <div ref={wrapperRef}>{children}</div>;
 }
