@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const socials = [
   {
@@ -30,6 +33,9 @@ const socials = [
 ];
 
 export default function Footer() {
+  const path = usePathname();
+  if (path.includes("game")) return null;
+
   return (
     <footer className="mt-20">
       <div>

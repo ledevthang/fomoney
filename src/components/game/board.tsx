@@ -1,13 +1,13 @@
 import { useCallback, useContext, useEffect, useRef } from "react";
 import { Tile as TileModel } from "@/models/tile";
-import {Team} from "@/models/tile";
+import { Team } from "@/models/tile";
 import styles from "@/styles/board.module.css";
 import Tile from "./tile";
 import { GameContext } from "@/context/game-context";
 import MobileSwiper, { SwipeInput } from "./mobile-swiper";
 import Splash from "./splash";
 
-export default function Board({team}: Team) {
+export default function Board({ team }: Team) {
   const { getTiles, moveTiles, startGame, status } = useContext(GameContext);
   const initialized = useRef(false);
 
@@ -65,14 +65,12 @@ export default function Board({team}: Team) {
   };
 
   const renderTiles = () => {
-
     return getTiles().map((tile: TileModel) => {
-      // console.log('here ',team)
-      tile.team = team
-      const new_tile = { ...tile }
-      return (
-        <Tile key={`${tile.id}`} {...new_tile} />
-      )
+      if (tile) {
+        tile.team = team;
+        const new_tile = { ...tile };
+        return <Tile key={`${tile.id}`} {...new_tile} />;
+      }
     });
   };
 

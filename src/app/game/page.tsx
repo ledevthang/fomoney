@@ -1,20 +1,28 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Image from "next/image";
 import pillblue from "../../assets/images/pillblue.png";
 import pillred from "../../assets/images/pillred.png";
 import sonic from "../../assets/images/sonic-logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "@/styles/globals.css";
 import "@/styles/style.css";
+import { useAllowPlay } from "@/store/game";
+import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useUser } from "@/store/user";
+import { AuthProvider } from "@prisma/client";
 
 export default function Home() {
   const [openRules, setOpenRules] = useState(false);
   const [selectTeam, setSelectTeam] = useState("");
   const [userTeam, setUserTeam] = useState("");
   const [teamWarning, setTeamWarning] = useState(false);
+  const allowPlayGame = useAllowPlay();
+  const user = useUser();
 
   // const [showClaimLong, setShowClaimLong] = useState(true);
 
@@ -48,24 +56,49 @@ export default function Home() {
     setSelectTeam("meme");
   };
 
-
-    const handleGo = () => {
-
-        if (!selectTeam) {
-            alert('Please select team first')
-            setTeamWarning(true);
-            return;
-        }
-        // router.push(`/play${selectTeam}`)
-        redirect(`/game/play${selectTeam}`);
-        return;
+  const handleGo = () => {
+    if (!selectTeam) {
+      alert("Please select team first");
+      setTeamWarning(true);
+      return;
     }
-
-
+    // router.push(`/play${selectTeam}`)
+    redirect(`/game/play${selectTeam}`);
+    return;
+  };
 
   const handleTeamWarning = () => {
     setTeamWarning(false);
   };
+
+  if (!allowPlayGame && user?.provider === AuthProvider.solana) {
+    return (
+      <div className="container">
+        <div className="homebody">
+          <main>
+            <div className="homebase">
+              <div className="prize_pool">
+                <Image
+                  src={sonic}
+                  className="prize_logo_sonic"
+                  alt="sonic_logo"
+                />
+                <div className="prize_num_sonic">20480</div>
+              </div>
+              <p className="mt-8 text-center">
+                You need to consume a KEY to play game
+              </p>
+              <div className="mt-4 flex justify-center">
+                <Link href={"/"}>
+                  <Button className="bg-yellow-500 text-lg">Play now</Button>
+                </Link>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
