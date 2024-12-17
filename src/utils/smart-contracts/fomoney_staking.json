@@ -1,5 +1,5 @@
 {
-  "address": "BTiAGA7RDSMuKp5KTfq6UWYTxCfrybHv4cQqCcwJmsHA",
+  "address": "Fv3ynrwVpiwHwBfN9qwTWrzvxdqkpMb3wiDCrVy9jfGM",
   "metadata": {
     "name": "fomoney_staking",
     "version": "0.1.0",
@@ -7,6 +7,99 @@
     "description": "Created with Anchor"
   },
   "instructions": [
+    {
+      "name": "claim_reward",
+      "discriminator": [149, 95, 181, 242, 94, 90, 158, 162],
+      "accounts": [
+        {
+          "name": "master",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_tvl_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 116, 118, 108, 95,
+                  112, 111, 111, 108, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "season_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_pool_prize",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 112, 111, 111, 108,
+                  95, 112, 114, 105, 122, 101, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "season_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_seasonal_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117, 115, 101, 114, 95, 115, 101, 97, 110, 111, 110, 97, 108,
+                  95, 105, 110, 102, 111, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "season_id"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "season_id",
+          "type": "u64"
+        }
+      ]
+    },
     {
       "name": "deposit",
       "discriminator": [242, 35, 198, 137, 82, 225, 242, 182],
@@ -80,6 +173,80 @@
         {
           "name": "amount",
           "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "end_season",
+      "discriminator": [167, 166, 166, 109, 166, 71, 15, 68],
+      "accounts": [
+        {
+          "name": "master",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_tvl_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 116, 118, 108, 95,
+                  112, 111, 111, 108, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "master.season_id",
+                "account": "Master"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_pool_prize",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 112, 111, 111, 108,
+                  95, 112, 114, 105, 122, 101, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "master.season_id",
+                "account": "Master"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "leaderboards",
+          "type": {
+            "array": ["pubkey", 10]
+          }
         }
       ]
     },
@@ -208,6 +375,38 @@
       "args": []
     },
     {
+      "name": "master_claim",
+      "discriminator": [171, 44, 98, 137, 29, 246, 89, 152],
+      "accounts": [
+        {
+          "name": "master",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "release_season",
       "discriminator": [91, 127, 139, 119, 225, 215, 83, 221],
       "accounts": [
@@ -308,6 +507,14 @@
         },
         {
           "name": "point_per_key",
+          "type": "u64"
+        },
+        {
+          "name": "fee",
+          "type": "u64"
+        },
+        {
+          "name": "one_hundred_percent",
           "type": "u64"
         }
       ]
@@ -411,12 +618,28 @@
   ],
   "events": [
     {
+      "name": "ClaimRewardEvent",
+      "discriminator": [207, 16, 14, 170, 176, 71, 40, 53]
+    },
+    {
       "name": "DepositEvent",
       "discriminator": [120, 248, 61, 83, 31, 142, 107, 144]
     },
     {
+      "name": "EndSeasonEvent",
+      "discriminator": [119, 240, 148, 242, 108, 84, 32, 63]
+    },
+    {
       "name": "InitializeMasterEvent",
       "discriminator": [16, 2, 33, 5, 33, 252, 181, 203]
+    },
+    {
+      "name": "JoinGameEvent",
+      "discriminator": [179, 248, 214, 123, 250, 99, 243, 236]
+    },
+    {
+      "name": "MasterClaimEvent",
+      "discriminator": [90, 101, 75, 152, 130, 123, 72, 161]
     },
     {
       "name": "ReleaseSeasonEvent",
@@ -511,9 +734,43 @@
       "code": 6015,
       "name": "InsufficientKeys",
       "msg": "Account: Insufficient Key"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidFee",
+      "msg": "Platform: Invalid platform fee"
+    },
+    {
+      "code": 6017,
+      "name": "NotInLeaderboards",
+      "msg": "User must in the top 10 leader board"
     }
   ],
   "types": [
+    {
+      "name": "ClaimRewardEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "season_id",
+            "type": "u64"
+          },
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          }
+        ]
+      }
+    },
     {
       "name": "DepositEvent",
       "type": {
@@ -538,6 +795,32 @@
           {
             "name": "used_key",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EndSeasonEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "season_id",
+            "type": "u64"
+          },
+          {
+            "name": "platform_fee",
+            "type": "u64"
+          },
+          {
+            "name": "pool_prize",
+            "type": "u64"
+          },
+          {
+            "name": "leader_boards",
+            "type": {
+              "array": ["pubkey", 10]
+            }
           }
         ]
       }
@@ -570,6 +853,54 @@
           {
             "name": "point_per_key",
             "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "one_hundred_percent",
+            "type": "u64"
+          },
+          {
+            "name": "fee_collected",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "JoinGameEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "season_id",
+            "type": "u64"
+          },
+          {
+            "name": "seasonal_start",
+            "type": "u64"
+          },
+          {
+            "name": "seasonal_end",
+            "type": "u64"
+          },
+          {
+            "name": "seasonal_tvl_pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "seasonal_pool_prize",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "used_key",
+            "type": "u64"
           }
         ]
       }
@@ -601,6 +932,38 @@
           },
           {
             "name": "point_per_key",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "one_hundred_percent",
+            "type": "u64"
+          },
+          {
+            "name": "fee_collected",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MasterClaimEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "master_key",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
             "type": "u64"
           }
         ]
@@ -672,6 +1035,10 @@
             "type": "u64"
           },
           {
+            "name": "prize_per_winner",
+            "type": "u64"
+          },
+          {
             "name": "leader_boards",
             "type": {
               "array": ["pubkey", 10]
@@ -699,6 +1066,18 @@
           },
           {
             "name": "point_per_key",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "one_hundred_percent",
+            "type": "u64"
+          },
+          {
+            "name": "fee_collected",
             "type": "u64"
           }
         ]

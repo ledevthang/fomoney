@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import { useSetAllowPlay } from "@/store/game";
 import { AuthProvider } from "@prisma/client";
-import { useRouter } from "next/navigation";
 
 export default function Splash({ heading = "You won!", type = "" }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +26,6 @@ export default function Splash({ heading = "You won!", type = "" }) {
   const accessToken = useUserStore.getState().accessToken;
   const setAllowPlay = useSetAllowPlay();
   const user = useUser();
-  const router = useRouter();
 
   const handleSubmit = async () => {
     setSubmitFailed(false);
@@ -42,7 +40,6 @@ export default function Splash({ heading = "You won!", type = "" }) {
     }
     if (user?.provider === AuthProvider.solana) {
       setAllowPlay(false);
-      router.push("/");
     }
   };
 

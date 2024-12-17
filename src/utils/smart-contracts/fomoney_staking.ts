@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/fomoney_staking.json`.
  */
 export type FomoneyStaking = {
-  address: "BTiAGA7RDSMuKp5KTfq6UWYTxCfrybHv4cQqCcwJmsHA";
+  address: "Fv3ynrwVpiwHwBfN9qwTWrzvxdqkpMb3wiDCrVy9jfGM";
   metadata: {
     name: "fomoneyStaking";
     version: "0.1.0";
@@ -13,6 +13,162 @@ export type FomoneyStaking = {
     description: "Created with Anchor";
   };
   instructions: [
+    {
+      name: "claimReward";
+      discriminator: [149, 95, 181, 242, 94, 90, 158, 162];
+      accounts: [
+        {
+          name: "master";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [97, 117, 116, 104, 111, 114, 105, 116, 121];
+              },
+            ];
+          };
+        },
+        {
+          name: "seasonalTvlPool";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  101,
+                  97,
+                  115,
+                  111,
+                  110,
+                  97,
+                  108,
+                  95,
+                  116,
+                  118,
+                  108,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100,
+                ];
+              },
+              {
+                kind: "arg";
+                path: "seasonId";
+              },
+            ];
+          };
+        },
+        {
+          name: "seasonalPoolPrize";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  101,
+                  97,
+                  115,
+                  111,
+                  110,
+                  97,
+                  108,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100,
+                ];
+              },
+              {
+                kind: "arg";
+                path: "seasonId";
+              },
+            ];
+          };
+        },
+        {
+          name: "userSeasonalInfo";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  101,
+                  97,
+                  110,
+                  111,
+                  110,
+                  97,
+                  108,
+                  95,
+                  105,
+                  110,
+                  102,
+                  111,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100,
+                ];
+              },
+              {
+                kind: "arg";
+                path: "seasonId";
+              },
+              {
+                kind: "account";
+                path: "signer";
+              },
+            ];
+          };
+        },
+        {
+          name: "signer";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+      ];
+      args: [
+        {
+          name: "seasonId";
+          type: "u64";
+        },
+      ];
+    },
     {
       name: "deposit";
       discriminator: [242, 35, 198, 137, 82, 225, 242, 182];
@@ -127,6 +283,122 @@ export type FomoneyStaking = {
         {
           name: "amount";
           type: "u64";
+        },
+      ];
+    },
+    {
+      name: "endSeason";
+      discriminator: [167, 166, 166, 109, 166, 71, 15, 68];
+      accounts: [
+        {
+          name: "master";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [97, 117, 116, 104, 111, 114, 105, 116, 121];
+              },
+            ];
+          };
+        },
+        {
+          name: "seasonalTvlPool";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  101,
+                  97,
+                  115,
+                  111,
+                  110,
+                  97,
+                  108,
+                  95,
+                  116,
+                  118,
+                  108,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100,
+                ];
+              },
+              {
+                kind: "account";
+                path: "master.season_id";
+                account: "master";
+              },
+            ];
+          };
+        },
+        {
+          name: "seasonalPoolPrize";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  101,
+                  97,
+                  115,
+                  111,
+                  110,
+                  97,
+                  108,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  115,
+                  101,
+                  101,
+                  100,
+                ];
+              },
+              {
+                kind: "account";
+                path: "master.season_id";
+                account: "master";
+              },
+            ];
+          };
+        },
+        {
+          name: "signer";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+      ];
+      args: [
+        {
+          name: "leaderboards";
+          type: {
+            array: ["pubkey", 10];
+          };
         },
       ];
     },
@@ -318,6 +590,38 @@ export type FomoneyStaking = {
       args: [];
     },
     {
+      name: "masterClaim";
+      discriminator: [171, 44, 98, 137, 29, 246, 89, 152];
+      accounts: [
+        {
+          name: "master";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [97, 117, 116, 104, 111, 114, 105, 116, 121];
+              },
+            ];
+          };
+        },
+        {
+          name: "signer";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+      ];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        },
+      ];
+    },
+    {
       name: "releaseSeason";
       discriminator: [91, 127, 139, 119, 225, 215, 83, 221];
       accounts: [
@@ -462,6 +766,14 @@ export type FomoneyStaking = {
           name: "pointPerKey";
           type: "u64";
         },
+        {
+          name: "fee";
+          type: "u64";
+        },
+        {
+          name: "oneHundredPercent";
+          type: "u64";
+        },
       ];
     },
     {
@@ -604,12 +916,28 @@ export type FomoneyStaking = {
   ];
   events: [
     {
+      name: "claimRewardEvent";
+      discriminator: [207, 16, 14, 170, 176, 71, 40, 53];
+    },
+    {
       name: "depositEvent";
       discriminator: [120, 248, 61, 83, 31, 142, 107, 144];
     },
     {
+      name: "endSeasonEvent";
+      discriminator: [119, 240, 148, 242, 108, 84, 32, 63];
+    },
+    {
       name: "initializeMasterEvent";
       discriminator: [16, 2, 33, 5, 33, 252, 181, 203];
+    },
+    {
+      name: "joinGameEvent";
+      discriminator: [179, 248, 214, 123, 250, 99, 243, 236];
+    },
+    {
+      name: "masterClaimEvent";
+      discriminator: [90, 101, 75, 152, 130, 123, 72, 161];
     },
     {
       name: "releaseSeasonEvent";
@@ -705,8 +1033,42 @@ export type FomoneyStaking = {
       name: "insufficientKeys";
       msg: "Account: Insufficient Key";
     },
+    {
+      code: 6016;
+      name: "invalidFee";
+      msg: "Platform: Invalid platform fee";
+    },
+    {
+      code: 6017;
+      name: "notInLeaderboards";
+      msg: "User must in the top 10 leader board";
+    },
   ];
   types: [
+    {
+      name: "claimRewardEvent";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seasonId";
+            type: "u64";
+          },
+          {
+            name: "account";
+            type: "pubkey";
+          },
+          {
+            name: "amount";
+            type: "u64";
+          },
+          {
+            name: "timestamp";
+            type: "u64";
+          },
+        ];
+      };
+    },
     {
       name: "depositEvent";
       type: {
@@ -731,6 +1093,32 @@ export type FomoneyStaking = {
           {
             name: "usedKey";
             type: "u64";
+          },
+        ];
+      };
+    },
+    {
+      name: "endSeasonEvent";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seasonId";
+            type: "u64";
+          },
+          {
+            name: "platformFee";
+            type: "u64";
+          },
+          {
+            name: "poolPrize";
+            type: "u64";
+          },
+          {
+            name: "leaderBoards";
+            type: {
+              array: ["pubkey", 10];
+            };
           },
         ];
       };
@@ -764,6 +1152,54 @@ export type FomoneyStaking = {
             name: "pointPerKey";
             type: "u64";
           },
+          {
+            name: "fee";
+            type: "u64";
+          },
+          {
+            name: "oneHundredPercent";
+            type: "u64";
+          },
+          {
+            name: "feeCollected";
+            type: "u64";
+          },
+        ];
+      };
+    },
+    {
+      name: "joinGameEvent";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seasonId";
+            type: "u64";
+          },
+          {
+            name: "seasonalStart";
+            type: "u64";
+          },
+          {
+            name: "seasonalEnd";
+            type: "u64";
+          },
+          {
+            name: "seasonalTvlPool";
+            type: "pubkey";
+          },
+          {
+            name: "seasonalPoolPrize";
+            type: "pubkey";
+          },
+          {
+            name: "userPubkey";
+            type: "pubkey";
+          },
+          {
+            name: "usedKey";
+            type: "u64";
+          },
         ];
       };
     },
@@ -794,6 +1230,38 @@ export type FomoneyStaking = {
           },
           {
             name: "pointPerKey";
+            type: "u64";
+          },
+          {
+            name: "fee";
+            type: "u64";
+          },
+          {
+            name: "oneHundredPercent";
+            type: "u64";
+          },
+          {
+            name: "feeCollected";
+            type: "u64";
+          },
+        ];
+      };
+    },
+    {
+      name: "masterClaimEvent";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "masterKey";
+            type: "pubkey";
+          },
+          {
+            name: "amount";
+            type: "u64";
+          },
+          {
+            name: "timestamp";
             type: "u64";
           },
         ];
@@ -865,6 +1333,10 @@ export type FomoneyStaking = {
             type: "u64";
           },
           {
+            name: "prizePerWinner";
+            type: "u64";
+          },
+          {
             name: "leaderBoards";
             type: {
               array: ["pubkey", 10];
@@ -892,6 +1364,18 @@ export type FomoneyStaking = {
           },
           {
             name: "pointPerKey";
+            type: "u64";
+          },
+          {
+            name: "fee";
+            type: "u64";
+          },
+          {
+            name: "oneHundredPercent";
+            type: "u64";
+          },
+          {
+            name: "feeCollected";
             type: "u64";
           },
         ];
