@@ -17,6 +17,7 @@ import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
 import { useAccessToken, useUser } from "@/store/user";
 import { AuthProvider } from "@prisma/client";
 import { saveDepositHistory } from "@/services/saveDepositHistory";
+import { updatePoint } from "@/services/updatePoint";
 
 export default function DepositForm() {
   const [openResultModal, setOpenResultModal] = useState(false);
@@ -25,7 +26,7 @@ export default function DepositForm() {
   const { toast } = useToast();
   const user = useUser();
   const { program } = useAnchor();
-  const { refetch } = useFetchTotalValueLocked();
+  const { refetch: refetchTvl } = useFetchTotalValueLocked();
   const { refetch: refetchUserSeasonInfo, data: userInfoSeason } =
     useFetchUserSeasonInfo();
   const accessToken = useAccessToken();
@@ -66,7 +67,7 @@ export default function DepositForm() {
     mutationFn: depositHandler,
     onSuccess: () => {
       setOpenResultModal(true);
-      refetch();
+      refetchTvl();
       refetchUserSeasonInfo();
       saveDepositHistory({
         amount: +value,
@@ -74,6 +75,11 @@ export default function DepositForm() {
         wallet: user?.address ?? "",
         accessToken: accessToken ?? "",
       });
+      updatePoint(
+        accessToken,
+        Math.floor(+value / PRICE_PER_KEY) * 100,
+        userInfoSeason?.seasonId.toString() ?? "0",
+      );
     },
     onError: (error) => {
       toast({

@@ -37,7 +37,6 @@ export default function UserInfo() {
   const { reset } = useUserActions();
   const { disconnect } = useWallet();
   const [open, setOpen] = useState(false);
-
   const { data, isLoading } = useFetchUserSeasonInfo();
 
   const handleLogout = async () => {
@@ -85,7 +84,7 @@ export default function UserInfo() {
               <DialogOverlay className="fixed inset-0 bg-black/70" />
               <DialogContent
                 aria-describedby="description"
-                className="fixed left-1/2 top-1/3 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-[#6b59dd] p-4 shadow-lg"
+                className="fixed left-1/2 top-1/3 z-10 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-[#6b59dd] p-4 shadow-lg"
               >
                 <DialogHeader className="flex flex-row items-center justify-between">
                   <DialogTitle className="text-left text-lg font-bold">
@@ -98,7 +97,7 @@ export default function UserInfo() {
                 <br />
                 <div>
                   <p className="text-center text-5xl font-bold text-yellow-400">
-                    {data?.point.toNumber().toLocaleString("en-US") ?? 0}{" "}
+                    {user?.point?.toLocaleString("en-US") ?? 0}{" "}
                     <span className="font-sans text-lg">pts</span>
                   </p>
                 </div>

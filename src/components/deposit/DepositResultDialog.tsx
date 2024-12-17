@@ -9,6 +9,7 @@ import { DialogHeader } from "../ui/dialog";
 import { ArrowBigUpIcon, Gamepad2Icon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { PRICE_PER_KEY } from "@/constants";
 
 interface DepositResultDialogProps {
   open: boolean;
@@ -45,7 +46,7 @@ export default function DepositResultDialog({
             <div className="text-center">
               <p className="text-sm font-bold text-red-500">Earned Points</p>
               <div className="flex items-center justify-center gap-2 text-5xl font-bold text-yellow-400">
-                {(value / 0.01) * 100}
+                {(value / PRICE_PER_KEY) * 100}
               </div>
             </div>
             <div className="my-2 h-[2px] w-full bg-yellow-500" />

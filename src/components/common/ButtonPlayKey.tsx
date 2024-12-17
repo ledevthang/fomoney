@@ -6,36 +6,30 @@ import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import { useMemo, useState } from "react";
 import { useUser } from "@/store/user";
 import { AuthProvider } from "@prisma/client";
-// import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useMutation } from "@tanstack/react-query";
 import { consumeKeyHandler } from "@/services/consumeKey";
 import { useAnchor } from "@/hooks/useAnchor";
 import { web3 } from "@coral-xyz/anchor";
 import { toast } from "@/hooks/use-toast";
 import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
-import SelectGameDialog from "./SelectGameDialog";
+import { useRouter } from "next/navigation";
 
 export default function ButtonPlayKey() {
   const user = useUser();
-  // const { setVisible } = useWalletModal();
+  const { setVisible } = useWalletModal();
   const { program } = useAnchor();
-  const { refetch, data } = useFetchUserSeasonInfo();
+  const { refetch: refetchUserSeasonInfo, data } = useFetchUserSeasonInfo();
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
-  const [openSelectGameModal, setOpenSelectGameModal] = useState(false);
+  const router = useRouter();
 
   const handleClickPlayWithKey = () => {
-    return toast({
-      title: "Coming soon!",
-      description: "Please try again later",
-      duration: 2000,
-    });
-
     // Open modal connnect Solana Wallet
-    // if (!user || user.provider !== AuthProvider.solana) {
-    //   setVisible(true);
-    // } else {
-    //   setOpenConfirmationModal(true);
-    // }
+    if (!user || user.provider !== AuthProvider.solana) {
+      setVisible(true);
+    } else {
+      setOpenConfirmationModal(true);
+    }
   };
 
   const buttonLabel = useMemo(() => {
@@ -49,9 +43,9 @@ export default function ButtonPlayKey() {
     mutationFn: consumeKeyHandler,
     mutationKey: ["consumeKeyJoinGame"],
     onSuccess: () => {
-      refetch();
+      refetchUserSeasonInfo();
       setOpenConfirmationModal(false);
-      setOpenSelectGameModal(true);
+      router.push("/game");
     },
     onError: (error) => {
       toast({
@@ -60,8 +54,6 @@ export default function ButtonPlayKey() {
         variant: "destructive",
         duration: 1500,
       });
-
-      // setOpenConfirmationModal(false);
     },
   });
 
@@ -106,10 +98,6 @@ export default function ButtonPlayKey() {
         confirmText="Play"
         confirmLoading={mutateConsumeKey.isPending}
         closeOnConfirm={false}
-      />
-      <SelectGameDialog
-        open={openSelectGameModal}
-        onOpenChange={setOpenSelectGameModal}
       />
     </>
   );

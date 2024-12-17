@@ -16,6 +16,7 @@ export interface AuthRequest {
 export interface User {
   address: string;
   provider: AuthProvider;
+  point?: number;
 }
 
 export interface RankingResponse {

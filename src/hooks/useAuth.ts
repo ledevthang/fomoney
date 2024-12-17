@@ -18,6 +18,7 @@ export const useAuth = () => {
       updateUser({
         provider: variables.provider!,
         address: variables.credential!,
+        point: data.user.point,
       });
       setAccessToken(data.accessToken);
     },
@@ -36,8 +37,8 @@ export const useAuth = () => {
         credential: walletAddress,
       });
       return response.accessToken;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

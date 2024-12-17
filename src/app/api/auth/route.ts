@@ -28,7 +28,30 @@ export async function POST(request: NextRequest) {
       userId: credential,
     });
 
-    return NextResponse.json({ accessToken }, { status: 200 });
+    const latestSeason = await prisma.season.findFirst({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const point = await prisma.point.findFirst({
+      where: {
+        userId: existed?.id,
+        seasonId: latestSeason?.id,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        accessToken,
+        user: {
+          point: point?.point ?? 0,
+          wallet: existed?.wallet,
+          provider: existed?.provider,
+        },
+      },
+      { status: 200 },
+    );
   } catch (error) {
     const err = error as Error;
     const errorMessage = err.message || "An unexpected error occurred";
