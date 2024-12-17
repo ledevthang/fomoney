@@ -1,5 +1,5 @@
 {
-  "address": "GuavBie4KmLaKp4e31dJQHbTB8Xa2KTzEAyxVRy6PKuK",
+  "address": "BTiAGA7RDSMuKp5KTfq6UWYTxCfrybHv4cQqCcwJmsHA",
   "metadata": {
     "name": "fomoney_staking",
     "version": "0.1.0",
@@ -117,6 +117,97 @@
       ]
     },
     {
+      "name": "join_game",
+      "discriminator": [107, 112, 18, 38, 56, 173, 60, 128],
+      "accounts": [
+        {
+          "name": "master",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_tvl_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 116, 118, 108, 95,
+                  112, 111, 111, 108, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "master.season_id",
+                "account": "Master"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_pool_prize",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 112, 111, 111, 108,
+                  95, 112, 114, 105, 122, 101, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "master.season_id",
+                "account": "Master"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_seasonal_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117, 115, 101, 114, 95, 115, 101, 97, 110, 111, 110, 97, 108,
+                  95, 105, 110, 102, 111, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "master.season_id",
+                "account": "Master"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "release_season",
       "discriminator": [91, 127, 139, 119, 225, 215, 83, 221],
       "accounts": [
@@ -220,6 +311,84 @@
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "withdrawal",
+      "discriminator": [198, 86, 72, 244, 40, 3, 17, 71],
+      "accounts": [
+        {
+          "name": "master",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+              }
+            ]
+          }
+        },
+        {
+          "name": "seasonal_tvl_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 101, 97, 115, 111, 110, 97, 108, 95, 116, 118, 108, 95,
+                  112, 111, 111, 108, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "season_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_seasonal_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117, 115, 101, 114, 95, 115, 101, 97, 110, 111, 110, 97, 108,
+                  95, 105, 110, 102, 111, 95, 115, 101, 101, 100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "season_id"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "season_id",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -256,6 +425,10 @@
     {
       "name": "UpdateMasterEvent",
       "discriminator": [137, 21, 42, 215, 186, 109, 163, 137]
+    },
+    {
+      "name": "WithdrawalEvent",
+      "discriminator": [161, 53, 185, 18, 98, 254, 54, 165]
     }
   ],
   "errors": [
@@ -296,23 +469,48 @@
     },
     {
       "code": 6007,
+      "name": "SeasonNotEnded",
+      "msg": "Season: the season not end"
+    },
+    {
+      "code": 6008,
       "name": "SeasonNotActive",
       "msg": "Season: the season is not active"
     },
     {
-      "code": 6008,
+      "code": 6009,
       "name": "InvalidDepositAmount",
       "msg": "Deposit: invalid deposit amount"
     },
     {
-      "code": 6009,
+      "code": 6010,
       "name": "InvalidConfiguration",
       "msg": "Configuration: invalid configuration"
     },
     {
-      "code": 6010,
+      "code": 6011,
       "name": "UnauthorizedSigner",
       "msg": "Unauthorized: unauthorized signer for seasonal account"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidSeasonId",
+      "msg": "Season: Invalid season id"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidWithdrawalAmount",
+      "msg": "Withdrawal: Invalid withdrawal amount"
+    },
+    {
+      "code": 6014,
+      "name": "InsufficientPoolBalance",
+      "msg": "Withdrawal: Insufficient Pool TVL Balance"
+    },
+    {
+      "code": 6015,
+      "name": "InsufficientKeys",
+      "msg": "Account: Insufficient Key"
     }
   ],
   "types": [
@@ -534,6 +732,26 @@
           {
             "name": "user_pubkey",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "season_id",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
           }
         ]
       }

@@ -85,7 +85,7 @@ const ModalConnectSonicX = ({
 
   const handleConnectSonicX = async () => {
     const linkSonicXApp =
-      "https://sonicx.app/dapp?url=%20https://fomoney-two.vercel.app/";
+      "https://sonicx.app/dapp?url=%20https://mobile.fomoney.io/";
 
     if (iframeWallet.readyState !== "Installed") {
       return toast({

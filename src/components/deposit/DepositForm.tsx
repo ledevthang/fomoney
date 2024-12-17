@@ -14,8 +14,9 @@ import { LoaderCircle } from "lucide-react";
 import { PRICE_PER_KEY } from "@/constants";
 import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
 import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
-import { useUser } from "@/store/user";
+import { useAccessToken, useUser } from "@/store/user";
 import { AuthProvider } from "@prisma/client";
+import { saveDepositHistory } from "@/services/saveDepositHistory";
 
 export default function DepositForm() {
   const [openResultModal, setOpenResultModal] = useState(false);
@@ -25,7 +26,9 @@ export default function DepositForm() {
   const user = useUser();
   const { program } = useAnchor();
   const { refetch } = useFetchTotalValueLocked();
-  const { refetch: refetchUserSeasonInfo } = useFetchUserSeasonInfo();
+  const { refetch: refetchUserSeasonInfo, data: userInfoSeason } =
+    useFetchUserSeasonInfo();
+  const accessToken = useAccessToken();
 
   const handleClickDeposit = () => {
     if (!user || user.provider !== AuthProvider.solana) {
@@ -65,6 +68,12 @@ export default function DepositForm() {
       setOpenResultModal(true);
       refetch();
       refetchUserSeasonInfo();
+      saveDepositHistory({
+        amount: +value,
+        season: userInfoSeason?.seasonId.toString() ?? "0",
+        wallet: user?.address ?? "",
+        accessToken: accessToken ?? "",
+      });
     },
     onError: (error) => {
       toast({

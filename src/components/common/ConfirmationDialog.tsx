@@ -8,17 +8,21 @@ import {
 } from "@radix-ui/react-dialog";
 import { DialogHeader } from "../ui/dialog";
 import { Button } from "../ui/button";
+import { LoaderCircle } from "lucide-react";
 
 interface ConfirmationDialogProps {
   open: boolean;
   // eslint-disable-next-line no-unused-vars
   onOpenChange: (open: boolean) => void;
-  title?: string; // Customizable title
-  description?: string; // Customizable description
-  confirmText?: string; // Customizable confirm button text
-  cancelText?: string; // Customizable cancel button text
-  onConfirm: () => void; // Confirm action
-  width?: string; // Custom width for the dialog
+  title?: string;
+  description?: string;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm: () => void;
+  width?: string;
+  confirmLoading?: boolean;
+  closeOnOutsideClick?: boolean;
+  closeOnConfirm?: boolean; // New flag to control closing on confirm
 }
 
 export default function ConfirmationDialog({
@@ -29,17 +33,26 @@ export default function ConfirmationDialog({
   confirmText = "Confirm",
   cancelText = "Cancel",
   onConfirm,
-  width = "max-w-lg", // Default width class
+  width = "max-w-lg",
+  confirmLoading = false,
+  closeOnOutsideClick = true,
+  closeOnConfirm = true, // Default to closing on confirm
 }: ConfirmationDialogProps) {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => closeOnOutsideClick && onOpenChange(isOpen)}
+    >
       <DialogPortal>
-        {/* Overlay with full-screen coverage */}
+        {/* Overlay */}
         <DialogOverlay className="fixed inset-0 bg-black/60" />
 
-        {/* Dialog Content centered */}
+        {/* Content */}
         <DialogContent
           className={`fixed left-1/2 top-1/2 w-[90%] ${width} -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-white p-4 shadow-lg`}
+          onInteractOutside={(e) => {
+            if (!closeOnOutsideClick) e.preventDefault();
+          }}
         >
           <DialogHeader>
             <DialogTitle className="text-left text-lg font-bold text-black">
@@ -57,13 +70,23 @@ export default function ConfirmationDialog({
               {cancelText}
             </Button>
             <Button
+              disabled={confirmLoading}
               className="bg-yellow-600 text-white hover:bg-yellow-700"
               onClick={() => {
                 onConfirm();
-                onOpenChange(false); // Close dialog after confirm
+                if (closeOnConfirm) {
+                  onOpenChange(false); // Close dialog if the flag is true
+                }
               }}
             >
-              {confirmText}
+              {confirmLoading ? (
+                <>
+                  <LoaderCircle className="animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                confirmText
+              )}
             </Button>
           </div>
         </DialogContent>

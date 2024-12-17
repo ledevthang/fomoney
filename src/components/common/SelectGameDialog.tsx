@@ -20,13 +20,13 @@ const LIST_GAMES = [
   {
     url: "/game",
     name: "FoMoney2048",
-    image: "/images/banner-game.jpg",
+    image: "/images/logo-fomoney2048.jpg",
     type: EGameType.inner,
   },
   {
     url: "https://blast-1258367219.cos.accelerate.myqcloud.com/sonicx/agent-legend/index.html",
     name: "Agent Legend",
-    image: "/images/banner-agent-legend.png",
+    image: "/images/logo-agent-legend.jpg",
     type: EGameType.embed,
   },
 ];

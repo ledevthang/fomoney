@@ -1,21 +1,29 @@
 /* eslint-disable no-console */
 
-
 // Function to submit the score
-export const submitScore = async (accessToken:string | null, score: number, season: string) => {
-    // const accessToken = useUserStore.getState().accessToken;
+export const submitScore = async (
+  accessToken: string | null,
+  score: number,
+  season: string,
+) => {
+  // const accessToken = useUserStore.getState().accessToken;
 
+  const url = "/api/update-point";
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
 
+  const body = JSON.stringify({
+    point: score,
+    season: season,
+  });
 
-    const url = '/api/update-point';
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-    };
-
-    const body = JSON.stringify({
-        point: score,
-        season: season,
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: body,
     });
 
     try {
@@ -40,5 +48,8 @@ export const submitScore = async (accessToken:string | null, score: number, seas
 
         console.error('Request failed', error);
     }
-    return;
+  } catch (error) {
+    console.error("Request failed", error);
+  }
+  return;
 };
