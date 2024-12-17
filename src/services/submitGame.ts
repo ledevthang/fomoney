@@ -27,7 +27,7 @@ export const submitScore = async (accessToken:string | null, score: number, seas
 
         if (response.ok) {
             const data = await response.json();
-            alert('You have successfully submit your game!')
+            // alert('You have successfully submit your game!')
             console.log('Score submitted successfully:', data);
             return response.status;
         } else {
