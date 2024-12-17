@@ -59,6 +59,7 @@
 .loading_content {
   display: flex;
   flex-direction: row;
+  background-color: #937ef5;
 }
 
 .loading_text {
@@ -70,6 +71,7 @@
 
 .submit_success{
   font-family: futura;
+  color: white
 }
 
 .submit_pop{
@@ -78,6 +80,7 @@
   color: white;
   font-weight: bold;
   margin-top: 5px;
+  background-color: #937ef5;
 }
 
 .button_NewGame{

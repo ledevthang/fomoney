@@ -1,5 +1,5 @@
 .board {
-  margin-top: 50px;
+  margin-top: 20px;
   position: relative;
   width: calc(var(--pixel-size) * 8 * 4 + var(--pixel-size) * 4);
 }

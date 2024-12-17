@@ -5,8 +5,14 @@ import { submitScore } from "@/services/submitGame";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserStore } from "@/store/user";
 import { useState } from 'react';
-import { Modal, ConfigProvider, Spin } from 'antd';
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
 
 
 export default function Splash({ heading = "You won!", type = "" }) {
@@ -25,7 +31,7 @@ export default function Splash({ heading = "You won!", type = "" }) {
     if (status == 200) {
       setIsLoading(false)
       setSubmitSuccess(true);
-    } else{
+    } else {
       setIsLoading(false)
       setSubmitFailed(true);
     }
@@ -40,7 +46,11 @@ export default function Splash({ heading = "You won!", type = "" }) {
     startGame();
   }
 
-  const closeSucceed = () =>{
+  const closeSucceed = () => {
+    // setSubmitSuccess(false);
+  }
+
+  const closeFailed = () => {
     // setSubmitSuccess(false);
   }
 
@@ -49,107 +59,37 @@ export default function Splash({ heading = "You won!", type = "" }) {
       <div>
         <h1>{heading}</h1>
         <div className="buttons">
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: '#ffffff',
-              },
-              components: {
-                Modal: {
-                  contentBg: '#937ef5',
-                  borderRadiusLG: 20,
-                  // boxShadow: '0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237);'
-                },
-                Spin: {
-                  contentHeight: 500,
-                }
-              },
-            }}
-          >
-              <Modal
-                style={{ top: 200, }}
-                // centered
-                open={isLoading}
-                onOk={handleLoading}
-                onCancel={handleLoading}
-                closeIcon={null}
-                width={200}
-                footer={[]}
-              >
-                <div className={styles.loading_content}>
-                  <Spin className={styles.loading} />
-                  <div className={styles.loading_text}>Loading...</div>
-                </div>
-              </Modal>
-          </ConfigProvider>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: '#ffffff',
-              },
-              components: {
-                Modal: {
-                  contentBg: '#937ef5',
-                  borderRadiusLG: 20,
-                  // boxShadow: '0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237);'
-                },
-                Spin: {
-                  contentHeight: 500,
-                }
-              },
-            }}
-          >
-              <Modal
-                style={{ top: 200, }}
-                // centered
-                open={submitSuccess}
-                onOk={closeSucceed}
-                onCancel={closeSucceed}
-                closeIcon={null}
-                width={200}
-                footer={[]}
-              >
-                <div className={styles.submit_pop}>
-                  <div className={styles.submit_success}>Congrats!</div>
-                  <div className={styles.submit_success}>Submit succeed!</div>
-                  <button className={styles.button_NewGame} onClick={handleNewGame}>New Game</button>
-                </div>
-              </Modal>
-          </ConfigProvider>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: '#ffffff',
-              },
-              components: {
-                Modal: {
-                  contentBg: '#937ef5',
-                  borderRadiusLG: 20,
-                  // boxShadow: '0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237),0 0 5px rgb(205, 166, 237);'
-                },
-                Spin: {
-                  contentHeight: 500,
-                }
-              },
-            }}
-          >
-              <Modal
-                style={{ top: 200, }}
-                // centered
-                open={submitFailed}
-                onOk={closeSucceed}
-                onCancel={closeSucceed}
-                closeIcon={null}
-                width={200}
-                footer={[]}
-              >
-                <div className={styles.submit_pop}>
-                  <div className={styles.submit_success}>Submit failed</div>
-                  <div className={styles.submit_success}>Please try again</div>
-                  <button className={styles.button_NewGame} onClick={handleSubmit}>Submit Score</button>
-                </div>
-              </Modal>
-          </ConfigProvider>
+          <Dialog open={isLoading} onOpenChange={handleLoading}>
+            <DialogContent className={styles.loading_content}>
+              <div className={styles.loading_text}>Loading...</div>
+            </DialogContent>
+          </Dialog>
+          <Dialog open={submitSuccess} onOpenChange={closeSucceed}>
+            <DialogContent className={styles.submit_pop}>
+              <DialogHeader>
+                <DialogTitle>Congrats!</DialogTitle>
+                <DialogDescription className={styles.submit_success}>Submit succeeded!</DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <button className={styles.button_NewGame} onClick={handleNewGame}>
+                  New Game
+                </button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Dialog open={submitFailed} onOpenChange={closeFailed}>
+            <DialogContent className={styles.submit_pop}>
+              <DialogHeader>
+                <DialogTitle>Submit Failed</DialogTitle>
+                <DialogDescription className={styles.submit_success}>Please try again</DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <button className={styles.button_NewGame} onClick={handleSubmit}>
+                  Submit Score
+                </button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
           <button className={styles.button} onClick={startGame} onTouchStart={startGame}>
             Play again
           </button>
