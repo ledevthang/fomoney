@@ -1,5 +1,5 @@
 "use client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import pillblue from "../../assets/images/pillblue.png";
 import pillred from "../../assets/images/pillred.png";
@@ -7,11 +7,12 @@ import sonic from "../../assets/images/sonic-logo.png";
 import { useState } from "react";
 import "@/styles/globals.css";
 import "@/styles/style.css";
-import { useAllowPlay } from "@/store/game";
+import { useAllowPlay, useSetAllowPlay } from "@/store/game";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useUser } from "@/store/user";
 import { AuthProvider } from "@prisma/client";
+import { toast } from "@/hooks/use-toast";
 
 export default function Home() {
   const [selectTeam, setSelectTeam] = useState("");
@@ -19,6 +20,8 @@ export default function Home() {
   const [, setTeamWarning] = useState(false);
   const allowPlayGame = useAllowPlay();
   const user = useUser();
+  const router = useRouter();
+  const setAllowPlay = useSetAllowPlay();
 
   // const [showClaimLong, setShowClaimLong] = useState(true);
 
@@ -54,12 +57,17 @@ export default function Home() {
 
   const handleGo = () => {
     if (!selectTeam) {
-      alert("Please select team first");
+      toast({
+        title: "Error",
+        description: "Please select team first",
+        variant: "destructive",
+        duration: 2000,
+      });
       setTeamWarning(true);
       return;
     }
-    // router.push(`/play${selectTeam}`)
-    redirect(`/game/play${selectTeam}`);
+    setAllowPlay(true);
+    router.push(`/game/play${selectTeam}`);
   };
 
   if (!allowPlayGame && user?.provider !== AuthProvider.sonicx) {
