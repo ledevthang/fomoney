@@ -15,6 +15,7 @@ import { toast } from "@/hooks/use-toast";
 import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
 import { useRouter } from "next/navigation";
 import { useSetAllowPlay } from "@/store/game";
+import { APP_URL } from "@/constants";
 
 export default function ButtonPlayKey() {
   const user = useUser();
@@ -26,6 +27,12 @@ export default function ButtonPlayKey() {
   const setAllowPlay = useSetAllowPlay();
 
   const handleClickPlayWithKey = () => {
+    // Check if user is using app via SonicX.app or via mobile.fomoney.app
+    if (window.self !== window.top) {
+      window.open(APP_URL, "_blank");
+      return;
+    }
+
     // Open modal connnect Solana Wallet
     if (!user || user.provider !== AuthProvider.solana) {
       setVisible(true);

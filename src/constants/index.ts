@@ -26,3 +26,6 @@ export enum EGameType {
   inner = "inner",
   embed = "embed",
 }
+
+export const APP_URL = "https://mobile.fomoney.io/";
+export const SONIC_APP_URL = `https://sonicx.app/dapp?url=%20${APP_URL}`;

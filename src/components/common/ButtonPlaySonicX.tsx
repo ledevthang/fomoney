@@ -22,6 +22,7 @@ import { WalletName } from "@solana/wallet-adapter-base";
 import { iframeWallet } from "@/lib/solana-wallet";
 import Link from "next/link";
 import SelectGameDialog from "./SelectGameDialog";
+import { SONIC_APP_URL } from "@/constants";
 
 export default function ButtonPlaySonicX() {
   const user = useUser();
@@ -84,8 +85,7 @@ const ModalConnectSonicX = ({
   const { select, connect } = useWallet();
 
   const handleConnectSonicX = async () => {
-    const linkSonicXApp =
-      "https://sonicx.app/dapp?url=%20https://mobile.fomoney.io/";
+    const linkSonicXApp = SONIC_APP_URL;
 
     if (iframeWallet.readyState !== "Installed") {
       return toast({
