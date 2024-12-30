@@ -8,14 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 import ConfirmationDialog from "../common/ConfirmationDialog";
 import { useMutation } from "@tanstack/react-query";
 import { depositHandler } from "@/services/deposit";
-import { useAnchor } from "@/hooks/useAnchor";
+import { useAnchor } from "@/hooks/use-anchor";
 import { web3 } from "@coral-xyz/anchor";
 import { LoaderCircle } from "lucide-react";
 import { PRICE_PER_KEY } from "@/constants";
-import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
-import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
-import { useAccessToken, useUser } from "@/store/user";
-import { AuthProvider } from "@prisma/client";
+import { useFetchTotalValueLocked } from "@/hooks/use-fetch-total-value-locked";
+import { useFetchUserSeasonInfo } from "@/hooks/use-fetch-user-season-info";
+import { useAccessToken, useToken, useUser } from "@/store/user";
+import { AuthProvider, Token } from "@prisma/client";
 import { saveDepositHistory } from "@/services/saveDepositHistory";
 import { updatePoint } from "@/services/updatePoint";
 
@@ -30,6 +30,7 @@ export default function DepositForm() {
   const { refetch: refetchUserSeasonInfo, data: userInfoSeason } =
     useFetchUserSeasonInfo();
   const accessToken = useAccessToken();
+  const selectedToken = useToken();
 
   const handleClickDeposit = () => {
     if (!user || user.provider !== AuthProvider.solana) {
@@ -116,7 +117,7 @@ export default function DepositForm() {
           required
         />
         <p className="absolute right-3 top-1/2 -translate-y-1/2 rounded bg-gray-400 px-2 text-sm text-white">
-          SOL
+          {selectedToken === Token.solana ? "SOL" : "Sonic"}
         </p>
       </div>
       <Button

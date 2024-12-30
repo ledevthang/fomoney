@@ -61,6 +61,7 @@ model DepositHistory {
   amount    Decimal
   season    Season   @relation(fields: [seasonId], references: [id])
   seasonId  String   @db.Uuid
+  token     Token    @default(solana)
 
   @@map("deposit_history")
 }
@@ -68,4 +69,9 @@ model DepositHistory {
 enum AuthProvider {
   solana
   sonicx
+}
+
+enum Token {
+  solana
+  sonic
 }

@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
-import { useAnchor } from "./useAnchor";
+import { useAnchor } from "./use-anchor";
 import { useQuery } from "@tanstack/react-query";
 import { EContractSeeds, EQueryKey } from "@/constants";
 

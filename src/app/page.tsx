@@ -1,16 +1,11 @@
-"use client";
-
 import Image from "next/image";
 import banner2048 from "../../public/images/banner-game.jpg";
 import bannerAgentLegend from "../../public/images/banner-agent-legend.png";
 import ButtonPlayKey from "@/components/common/ButtonPlayKey";
 import ButtonPlaySonicX from "@/components/common/ButtonPlaySonicX";
-import { useAuth } from "@/hooks/useAuth";
 import TopRankings from "@/components/common/TopRankings";
 
 export default function Home() {
-  useAuth();
-
   return (
     <div className="">
       <Image src={banner2048} alt="FoMoney2048" />

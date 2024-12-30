@@ -2,7 +2,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { EContractSeeds, EQueryKey } from "@/constants";
 import { PublicKey } from "@solana/web3.js";
 import { useQuery } from "@tanstack/react-query";
-import { useAnchor } from "./useAnchor";
+import { useAnchor } from "./use-anchor";
 import { BN } from "bn.js";
 
 export const useFetchUserSeasonInfo = () => {

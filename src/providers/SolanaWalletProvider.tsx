@@ -5,7 +5,7 @@ import {
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { endpoint, wallets } from "@/lib/solana-wallet";
 import "@solana/wallet-adapter-react-ui/styles.css";
-import { useIframeWalletHandler } from "@/hooks/useIframeWalletHandler";
+import { useIframeWalletHandler } from "@/hooks/use-iframe-wallet-handler";
 
 export default function SolanaWalletProvider({
   children,

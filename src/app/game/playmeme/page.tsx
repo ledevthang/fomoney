@@ -8,7 +8,7 @@ import pillred from "../../../assets/images/pillred.png";
 import GameProvider from "@/context/game-context";
 import "@/styles/globals.css";
 import "@/styles/style.css";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { useAllowPlay } from "@/store/game";
 import { redirect } from "next/navigation";
 

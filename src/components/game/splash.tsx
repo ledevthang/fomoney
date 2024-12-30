@@ -2,7 +2,7 @@ import { GameContext } from "@/context/game-context";
 import styles from "@/styles/splash.module.css";
 import { useContext } from "react";
 import { submitScore } from "@/services/submitGame";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { useUser, useUserStore } from "@/store/user";
 import { useState } from "react";
 import {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useFetchUserSeasonInfo } from "@/hooks/useFetchUserSeasonInfo";
+import { useFetchUserSeasonInfo } from "@/hooks/use-fetch-user-season-info";
 import {
   Dialog,
   DialogContent,
@@ -31,8 +31,10 @@ import {
 } from "../ui/dropdown-menu";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { AuthProvider } from "@prisma/client";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function UserInfo() {
+  useAuth();
   const user = useUser();
   const { reset } = useUserActions();
   const { disconnect } = useWallet();
@@ -68,7 +70,7 @@ export default function UserInfo() {
       {user.provider === AuthProvider.solana && (
         <>
           <Button
-            className="h-10 bg-[#512DA8] px-2 font-bold text-yellow-400"
+            className="h-10 bg-[#512DA8] px-2 font-bold text-yellow-400 hover:bg-[#512DA8]"
             onClick={() => setOpen(true)}
             disabled={isLoading}
           >
@@ -79,6 +81,7 @@ export default function UserInfo() {
               <span>{data?.key.toNumber() ?? 0}</span>
             )}
           </Button>
+
           <Dialog onOpenChange={setOpen} open={open}>
             <DialogPortal>
               <DialogOverlay className="fixed inset-0 bg-black/70" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useFetchRankings } from "@/hooks/useFetchRankings";
+import { useFetchRankings } from "@/hooks/use-fetch-rankings";
 import SectionTitle from "./SectionTitle";
 import { useMemo } from "react";
 import RankingListItem from "./RankingListItem";

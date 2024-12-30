@@ -1,4 +1,6 @@
+import SelectToken from "../common/SelectToken";
 import UserInfo from "../common/UserInfo";
+
 import Logo from "./Logo";
 
 export default function Header() {
@@ -7,6 +9,7 @@ export default function Header() {
       <Logo />
       <div className="flex items-center gap-1">
         <UserInfo />
+        <SelectToken />
       </div>
     </header>
   );

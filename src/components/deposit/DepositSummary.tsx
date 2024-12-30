@@ -3,13 +3,17 @@
 import SectionTitle from "@/components/common/SectionTitle";
 import Image from "next/image";
 import sonicx from "../../../public/images/sonicx.png";
+import solana from "../../../public/images/solana.png";
 import ring from "../../../public/images/ring.png";
-import { useFetchTotalValueLocked } from "@/hooks/useFetchTotalValueLocked";
+import { useFetchTotalValueLocked } from "@/hooks/use-fetch-total-value-locked";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { PRIZED_POOL } from "@/constants";
+import { useToken } from "@/store/user";
+import { Token } from "@prisma/client";
 
 export default function DepositSummary() {
   const tvlPoolData = useFetchTotalValueLocked();
+  const selectedToken = useToken();
 
   const depositAmount =
     (tvlPoolData.data?.deposited.toNumber() ?? 0) / LAMPORTS_PER_SOL;
@@ -20,7 +24,11 @@ export default function DepositSummary() {
         <div className="text-center">
           <p className="text-xl font-bold">Total Value Locked</p>
           <div className="flex items-center justify-center gap-2 text-5xl font-bold text-yellow-500">
-            <Image src={sonicx} width={48} height={48} alt="Sonic X" />
+            {selectedToken === Token.solana ? (
+              <Image src={solana} alt="Solana" width={40} height={40} />
+            ) : (
+              <Image src={sonicx} alt="Sonic" width={48} height={48} />
+            )}
             <span className="font-digital text-shadow-blue">
               {depositAmount.toLocaleString("en-US")}
             </span>

@@ -8,7 +8,7 @@ import pillblue from "../../../assets/images/pillblue.png";
 import GameProvider from "@/context/game-context";
 import "@/styles/globals.css";
 import "@/styles/style.css";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { redirect } from "next/navigation";
 import { useAllowPlay } from "@/store/game";
 
